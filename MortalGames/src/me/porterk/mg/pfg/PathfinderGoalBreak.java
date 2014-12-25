@@ -2,7 +2,6 @@ package me.porterk.mg.pfg;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
-import org.bukkit.World;
 import org.bukkit.block.Block;
 
 import net.minecraft.server.v1_8_R1.EntityInsentient;
