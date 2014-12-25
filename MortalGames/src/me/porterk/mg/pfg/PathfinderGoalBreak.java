@@ -1,8 +1,14 @@
 package me.porterk.mg.pfg;
 
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
+import org.bukkit.craftbukkit.v1_8_R1.CraftSound;
+import org.bukkit.craftbukkit.v1_8_R1.block.CraftBlock;
 
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityPlayer;
@@ -15,6 +21,25 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 	protected Block block;
 	protected Block block2;
 	protected Block block3;
+	
+	public void breakBlock(Block b) throws Throwable {
+        b.breakNaturally();
+        for(Sound sound : Sound.values()) {
+            Field f = CraftSound.class.getDeclaredField("sounds");
+            f.setAccessible(true);
+           
+            String[] sounds = (String[]) f.get(null);
+            Method getBlock = CraftBlock.class.getDeclaredMethod("getNMSBlock");
+            getBlock.setAccessible(true);
+            Object nmsBlock = getBlock.invoke(b);
+            net.minecraft.server.v1_8_R1.Block block = (net.minecraft.server.v1_8_R1.Block) nmsBlock;
+ 
+            if(block.stepSound.getBreakSound()
+                    .equals(sounds[sound.ordinal()])) {
+                b.getWorld().playSound(b.getLocation(), sound,10, 10);
+            }
+        }
+    }
 
 	public PathfinderGoalBreak(EntityInsentient entityinsentient) {
 		this.a = entityinsentient;
@@ -51,23 +76,19 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 
 
 
-				if(!block.getType().equals(Material.AIR)){
+				if((!block.getType().equals(Material.AIR)) && 
+						(!block.getType().equals(Material.WATER))&& 
+						(!block.getType().equals(Material.LAVA))){
 
 
 					if(a.getGoalTarget() instanceof EntityPlayer){
-
-						EntityPlayer tar = (EntityPlayer) a.getGoalTarget();
-
-						if(tar.getBukkitEntity().getLocation().getY() == a.locY){
-
-							world.getBlockAt(x, y -1, z + 1);
-
+						try {
+							breakBlock(block);
+						} catch (Throwable e) {
+							e.printStackTrace();
 						}
 
-
-						world.getBlockAt(x, y, z +1).breakNaturally();
-
-						a.world.broadcastEntityEffect(a, (byte) 0);
+						a.world.broadcastEntityEffect(a, (byte) 54);
 					}
 
 				}
@@ -83,18 +104,19 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 
 
 
-				if(!block.getType().equals(Material.AIR)){
-
+				if((!block.getType().equals(Material.AIR)) && 
+						(!block.getType().equals(Material.WATER))&& 
+						(!block.getType().equals(Material.LAVA))){
 
 
 					if(a.getGoalTarget() instanceof EntityPlayer){
+						try {
+							breakBlock(block);
+						} catch (Throwable e) {
+							e.printStackTrace();
+						}
 
-
-
-						world.getBlockAt(x -1, y, z).breakNaturally();
-
-						a.world.broadcastEntityEffect(a, (byte) 0);
-
+						a.world.broadcastEntityEffect(a, (byte) 54);
 					}
 
 				}
@@ -109,18 +131,19 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 
 
 
-				if(!block.getType().equals(Material.AIR)){
-
+				if((!block.getType().equals(Material.AIR)) && 
+						(!block.getType().equals(Material.WATER))&& 
+						(!block.getType().equals(Material.LAVA))){
 
 
 					if(a.getGoalTarget() instanceof EntityPlayer){
+						try {
+							breakBlock(block);
+						} catch (Throwable e) {
+							e.printStackTrace();
+						}
 
-
-
-						world.getBlockAt(x, y, z -1).breakNaturally();
-
-						a.world.broadcastEntityEffect(a, (byte) 0);
-
+						a.world.broadcastEntityEffect(a, (byte) 54);
 					}
 
 				}
@@ -134,16 +157,19 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 
 				block = (Block) world.getBlockAt(l);
 
-				if(!block.getType().equals(Material.AIR)){
+				if((!block.getType().equals(Material.AIR)) && 
+						(!block.getType().equals(Material.WATER))&& 
+						(!block.getType().equals(Material.LAVA))){
+
 
 					if(a.getGoalTarget() instanceof EntityPlayer){
+						try {
+							breakBlock(block);
+						} catch (Throwable e) {
+							e.printStackTrace();
+						}
 
-
-
-						world.getBlockAt(x +1, y, z).breakNaturally();
-
-						a.world.broadcastEntityEffect(a, (byte) 0);
-
+						a.world.broadcastEntityEffect(a, (byte) 54);
 					}
 
 				}
