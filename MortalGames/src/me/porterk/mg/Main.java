@@ -86,8 +86,8 @@ public class Main extends JavaPlugin{
 		
 		try {
 			config.save(api().configFile());
-		} catch (IOException e1) {
-			e1.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}	
 		try{
 			getServer().getPluginManager().registerEvents(new MortalListener(this), this);
@@ -97,6 +97,14 @@ public class Main extends JavaPlugin{
 			api().debugLog("Listener class not registered! (NullPointerException)");
 		}
 		api().debugLog("Plugin enabled!");
+		
+		try{
+		api().buildPrefab();
+		Bukkit.getServer().getLogger().log(Level.INFO, "Team bases constructed");
+		}catch(Exception e){
+			api().debugLog(e.toString());
+			e.printStackTrace();
+		}
 	}
 	
 	@Override
