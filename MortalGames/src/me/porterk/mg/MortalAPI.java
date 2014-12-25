@@ -209,11 +209,16 @@ public class MortalAPI {
 		teamNumber = 0;
 		for (Player player : players) {
 			teamSelect.put(player, teamNumber++);
-			if (teamNumber >= 6 && teamNumber < 10) {
+			if ((teamNumber == 1) ||
+				(teamNumber == 3) ||
+				(teamNumber == 5) ||
+				(teamNumber == 7) ||
+				(teamNumber == 9)
+					) {
 				team.put(player, "orange");
 				plugin.chat.put(player.getName(), "orange");
 				player.sendMessage("You're on the " + ChatColor.GOLD + "orange " + ChatColor.WHITE + "team");
-			}else if(teamNumber <= 5){
+			}else{
 				team.put(player, "green");
 				plugin.chat.put(player.getName(), "green");
 				player.sendMessage("You're on the " + ChatColor.GREEN + "green " + ChatColor.WHITE + "team");
