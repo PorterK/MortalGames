@@ -53,6 +53,7 @@ public class MortalListener implements Listener{
 			p.sendMessage(ChatColor.GOLD + "Welcome to " + ChatColor.DARK_RED + "The Mortal Games!");
 			p.sendMessage(ChatColor.BLUE + "Visit my website at" + ChatColor.RED + " kalob.net!");
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
+			api().setSpectating(p);
 			
 			
 		}
