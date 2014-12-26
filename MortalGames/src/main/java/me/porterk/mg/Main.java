@@ -13,6 +13,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
@@ -51,6 +52,10 @@ public class Main extends JavaPlugin{
 	public void onEnable(){
 		
 		plugin = this;
+		
+		for(Entity e : Bukkit.getWorld("world").getEntities()){
+			e.remove();
+		}
 		
 		tag = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "MG" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
 		chat = new HashMap<String, String>();
@@ -122,6 +127,10 @@ public class Main extends JavaPlugin{
 		api.debugLog("Plugin disabled!");
 		chat.clear();
 		CustomEntityType.unregisterEntities();
+		
+		for(Entity e : Bukkit.getWorld("world").getEntities()){
+			e.remove();
+		}
 		
 		plugin = null;
 	}
