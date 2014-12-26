@@ -2,15 +2,19 @@ package me.porterk.mg;
 
 
 import org.bukkit.ChatColor;
+import org.bukkit.Material;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.inventory.ItemStack;
 
 public class MortalListener implements Listener{
 
@@ -179,5 +183,43 @@ public class MortalListener implements Listener{
 	            }
 	        }
 	    }
+	 
+	 @EventHandler
+	 public void onMobDeath(EntityDeathEvent e){
+		 
+		 if(e.getEntity().getKiller()  instanceof Player){
+			 
+			 if(e.getEntity().getType().equals(EntityType.ZOMBIE)){
+				 
+				 e.getDrops().remove(Material.ROTTEN_FLESH);
+				 e.getDrops().remove(Material.IRON_INGOT);
+				
+				 e.getDrops().add(new ItemStack(Material.BREAD, 1));
+				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(0, 5))); //Will eventually be currency
+				 
+			 }
+			 
+			 if(e.getEntity().getType().equals(EntityType.SKELETON)){
+				 
+				 e.getDrops().remove(Material.BONE);
+				 e.getDrops().remove(Material.ARROW);
+				 e.getDrops().remove(Material.BOW);
+				 
+				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(3, 6)));
+				 
+			 }
+			 
+			 if(e.getEntity().getType().equals(EntityType.SPIDER)){
+				 
+				 e.getDrops().remove(Material.SPIDER_EYE);
+				 e.getDrops().remove(Material.STRING);
+				 
+				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(4, 7)));
+				 
+			 }
+			 
+		 }
+		 
+	 }
 
 }
