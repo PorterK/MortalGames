@@ -186,6 +186,8 @@ public class MortalAPI {
 				plugin.getServer().getScheduler().cancelTask(beforeStart);
 
 				gameStart();
+				
+				
 
 				return;
 				}
@@ -505,9 +507,11 @@ public class MortalAPI {
 		
 	}
 	
-	public void setSpectating(Player p){
-
+	public void setSpectating(Player p, Main plugin){
 		
+		this.plugin = plugin;
+
+		if(p != null){
 		if(spectating.size() < 10){
 			
 			plugin.chat.put(p.getName(), "spectate");
@@ -524,10 +528,9 @@ public class MortalAPI {
 				s.kickPlayer(ChatColor.DARK_RED + "Game over! " + ChatColor.GOLD + p.getName() + ChatColor.DARK_RED + " has won!");
 				gameOver();
 			}
-			
 		}
 			
-	
+		}
 		
 	}
 	

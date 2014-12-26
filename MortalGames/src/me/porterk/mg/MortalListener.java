@@ -20,9 +20,7 @@ public class MortalListener implements Listener{
 	}
 
 
-	public MortalAPI api() {
-		return new MortalAPI(null);
-	}
+	MortalAPI api = new MortalAPI(plugin);
 	
 	
 
@@ -53,7 +51,7 @@ public class MortalListener implements Listener{
 			p.sendMessage(ChatColor.GOLD + "Welcome to " + ChatColor.DARK_RED + "The Mortal Games!");
 			p.sendMessage(ChatColor.BLUE + "Visit my website at" + ChatColor.RED + " kalob.net!");
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
-			api().setSpectating(p);
+			api.setSpectating(p, plugin);
 			
 			
 		}
@@ -63,11 +61,11 @@ public class MortalListener implements Listener{
 		}
 
 		if(playerCount == 10){
-			api().startGame();
+			api.startGame();
 		}
 		
-		if(api().isGameOn() == true){
-			api().setSpectating(p);
+		if(api.isGameOn()){
+			api.setSpectating(p, plugin);
 		}
 
 
@@ -152,13 +150,15 @@ public class MortalListener implements Listener{
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e){
 		
-		Player p =  e.getEntity();
+		Player a =  e.getEntity();
 		
-		api().setSpectating(p);
+		a.setHealth(20);
 		
-		if(p.getKiller() instanceof Player){
+		api.setSpectating(a, plugin);
 		
-		e.setDeathMessage(ChatColor.DARK_RED + "Player " + ChatColor.GOLD + p.getName() + ChatColor.DARK_RED + " has fallen to " + ChatColor.GOLD + p.getKiller().getName());
+		if(a.getKiller() instanceof Player){
+		
+		e.setDeathMessage(ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " has fallen to " + ChatColor.GOLD + a.getKiller().getName());
 		
 		}
 	}

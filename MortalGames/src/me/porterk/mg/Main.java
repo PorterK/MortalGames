@@ -28,8 +28,8 @@ public class Main extends JavaPlugin{
 	public MySQL ms;
 	public Connection c = null;
 	public String database = config.getString("MySQL.database");
-	public String tag = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "MG" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
-	public HashMap<String, String> chat = new HashMap<String, String>();
+	public String tag;
+	public HashMap<String, String> chat;
 	public HashMap<String, String> lastchat = new HashMap<String, String>();
 	public Statement cs;
 	public Scoreboard s;
@@ -44,6 +44,9 @@ public class Main extends JavaPlugin{
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable(){
+		
+		tag = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "MG" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
+		chat = new HashMap<String, String>();
 		
 		s = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 		obj = s.registerNewObjective("game", "dummy");
