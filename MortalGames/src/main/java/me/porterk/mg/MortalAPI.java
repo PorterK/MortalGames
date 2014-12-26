@@ -517,23 +517,6 @@ public class MortalAPI {
 	@SuppressWarnings("deprecation")
 	public void setSpectating(Player p){
 		
-		for(Player pl : Bukkit.getOnlinePlayers()){
-			
-			if(!spectating.contains(pl.getName())){
-				
-				ItemStack i = new ItemStack(397, 1, (short) 3);
-				
-				SkullMeta meta = (SkullMeta) i.getItemMeta();
-				
-				meta.setOwner(pl.getName());
-				
-				i.setItemMeta(meta);
-				
-				p.getInventory().addItem(i);
-				
-			}
-			
-		}
 
 		if(p != null){
 		if(spectating.size() < 10){
@@ -545,6 +528,24 @@ public class MortalAPI {
 			spectating.add(p.getName());
 			
 			p.setGameMode(GameMode.SPECTATOR);
+			
+			for(Player pl : Bukkit.getOnlinePlayers()){
+				
+				if(!spectating.contains(pl.getName())){
+					
+					ItemStack i = new ItemStack(397, 1, (short) 3);
+					
+					SkullMeta meta = (SkullMeta) i.getItemMeta();
+					
+					meta.setOwner(pl.getName());
+					
+					i.setItemMeta(meta);
+					
+					p.getInventory().addItem(i);
+					
+				}
+				
+			}
 		}else{
 			
 			for(Player s : Bukkit.getServer().getOnlinePlayers()){
