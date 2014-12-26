@@ -3,21 +3,67 @@
   <groupId>MortalGames</groupId>
   <artifactId>MortalGames</artifactId>
   <version>0.0.1-SNAPSHOT</version>
+  
   <build>
-    <sourceDirectory>src</sourceDirectory>
-    <plugins>
-      <plugin>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <version>3.1</version>
-        <configuration>
-          <source>1.6</source>
-          <target>1.6</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
+        <defaultGoal>package install</defaultGoal>
+        <!--Just use the project name to replace an old version of the plugin if the user does only copy-paste-->
+        <finalName>${project.name}</finalName>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <!-- Don't use 3.0 since the incremtalCompilation compiles every file even they aren't changed-->
+                <version>2.5.1</version>
+                <configuration>
+                    <!--So many people still use Java 6 ;( http://mcstats.org/global/#Java+Version-->
+                    <source>1.6</source>
+                    <target>1.6</target>
+                    <showWarnings>true</showWarnings>
+                    <showDeprecation>true</showDeprecation>
+                </configuration>
+            </plugin>
+
+            <!--Add meta data not only in the plugin.yml-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
+                <version>2.5</version>
+                <configuration>
+                    <archive>
+                        <manifest>
+                            <addDefaultImplementationEntries>true</addDefaultImplementationEntries>
+                            <addDefaultSpecificationEntries>true</addDefaultSpecificationEntries>
+                        </manifest>
+                        <manifestEntries>
+                            <Url>${project.url}</Url>
+                            <Source>${project.scm.url}</Source>
+                            <Issue>${project.issueManagement.url}</Issue>
+                            <Description>${project.description}</Description>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
+        </plugins> 
+  </build> 
+  
   <organization>
   	<name>GLServers Inc.</name>
   	<url>glservers.com</url>
   </organization>
+      <repositories>
+        <!-- Bukkit can be found at the following repository -->
+        <repository>
+          <id>bukkit-repo</id>
+          <url>http://repo.bukkit.org/content/groups/public/</url>
+        </repository>
+    </repositories>
+  <dependencies>
+  	<dependency>
+  		<groupId>org.bukkit</groupId>
+  		<artifactId>bukkit</artifactId>
+  		<version>1.7.9-R0.2</version>
+  		<scope>provided</scope>
+  	</dependency>
+  </dependencies>
 </project>
