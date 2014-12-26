@@ -39,6 +39,8 @@ public class MortalListener implements Listener{
 		
 		Main.getInstance().chat.put(p.getName(), "general");
 		
+		p.sendMessage(ChatColor.DARK_RED + "Testing the automated " + ChatColor.GOLD + " stuff.");
+		
 		if(playerCount < 10){
 			p.sendMessage(ChatColor.GOLD + "Welcome, "  + ChatColor.GREEN + p.getDisplayName() +
 					ChatColor.GOLD + " to " + ChatColor.DARK_RED + "The Mortal Games");
