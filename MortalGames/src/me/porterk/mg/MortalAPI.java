@@ -340,6 +340,8 @@ public class MortalAPI {
 						for(Player tar : Main.getInstance().getServer().getOnlinePlayers()){
 							
 							mobAmount = waveNumber * 2;
+							
+							while(mobAmount > 0){
 
 							if(!spectating.contains(tar.getName())){
 
@@ -376,6 +378,7 @@ public class MortalAPI {
 									
 									while(skeleton > 0){
 										
+										
 										Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
 
 										mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
@@ -409,14 +412,14 @@ public class MortalAPI {
 								}
 								
 								if(waveNumber >= 5){
-									
+						
 									int spider;
 									
 									spider = random(waveNumber / 5, waveNumber / 2);
-									
 									mobAmount -= spider;
 									
 									while(spider > 0){
+										
 										
 										Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
 
@@ -436,6 +439,7 @@ public class MortalAPI {
 								}
 							}
 						}
+					}
 
 					}
 
