@@ -29,6 +29,7 @@ public class MortalListener implements Listener{
 
 	MortalAPI api = new MortalAPI();
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent e){
 
@@ -78,6 +79,7 @@ public class MortalListener implements Listener{
 		e.setQuitMessage(Main.getInstance().tag + name + " chickened out!");
 	}
 
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerChat(AsyncPlayerChatEvent e){
 		e.setCancelled(true);
@@ -148,6 +150,7 @@ public class MortalListener implements Listener{
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e){
 		
@@ -238,7 +241,8 @@ public class MortalListener implements Listener{
 		 
 	 }
 	 
-	 @EventHandler
+	 @SuppressWarnings("deprecation")
+	@EventHandler
 	 public void onProjectileHit(ProjectileHitEvent e){
 		 
 		Entity a = e.getEntity();

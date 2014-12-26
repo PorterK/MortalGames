@@ -21,6 +21,9 @@ import java.util.List;
 
 
 
+
+
+
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
@@ -195,6 +198,7 @@ public class MortalAPI {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void gameStart(){
 		
 		Main.getInstance().getServer().getScheduler().cancelTask(beforeStart);
@@ -331,6 +335,7 @@ public class MortalAPI {
 
 				wave = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() { 
 
+					@SuppressWarnings("deprecation")
 					public void run(){
 
 						waveCount--;
@@ -507,6 +512,7 @@ public class MortalAPI {
 		
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void setSpectating(Player p){
 
 		if(p != null){
