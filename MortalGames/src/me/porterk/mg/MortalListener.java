@@ -7,6 +7,7 @@ import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.BlockPlaceEvent;
 import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
@@ -218,6 +219,17 @@ public class MortalListener implements Listener{
 				 
 			 }
 			 
+		 }
+		 
+	 }
+	 
+	 @EventHandler
+	 public void onBlockPlace(BlockPlaceEvent e){
+		 
+		 Player p = e.getPlayer();
+		 
+		 if(!p.isOp()){
+		 e.setCancelled(api.canBuild());
 		 }
 		 
 	 }

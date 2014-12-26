@@ -52,6 +52,7 @@ public class MortalAPI {
 	public int mobAmount;
 	protected boolean isGameOn;
 	protected boolean pvp;
+	protected boolean build;
 	int cash;
 	int teamNumber;
 	Statement s = null;
@@ -227,6 +228,8 @@ public class MortalAPI {
 	public void preWave(){
 		
 		Main.getInstance().getServer().getScheduler().cancelTask(wave);
+		
+		setCanBuild(true);
 
 		preWaveCount = 121;
 
@@ -243,6 +246,7 @@ public class MortalAPI {
 				switch(preWaveCount){
 
 				case 120: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1) + " starts in " + ChatColor.DARK_RED + "2 minutes" + ChatColor.GOLD + ".");
+				 Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.AQUA + "Reinforce your fortress while you have the chance!");
 				break;
 				case 60: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "1 minute" + ChatColor.GOLD + ".");
 				break;
@@ -320,7 +324,7 @@ public class MortalAPI {
 
 	public void startWave(){
 				
-		
+				setCanBuild(false);
 
 				waveCount = 3;
 
@@ -561,6 +565,17 @@ public class MortalAPI {
 	public Boolean allowPVP(){
 		
 		return pvp;
+	}
+	
+	public void setCanBuild(Boolean b){
+		
+		build = b;
+		
+	}
+	
+	public Boolean canBuild(){
+		
+		return build;
 	}
 
 }
