@@ -38,7 +38,7 @@ public class MortalListener implements Listener{
 			scoreboard(p);
 		}else if(playerCount >= 10){
 			p.sendMessage(ChatColor.GOLD + "Welcome to " + ChatColor.DARK_RED + "The Mortal Games!");
-			p.sendMessage(ChatColor.BLUE + "Visit my website at" + ChatColor.RED + " kalob.net!");
+			p.sendMessage(ChatColor.BLUE + "Visit our website at" + ChatColor.RED + " mortal.gldesert.com");
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
 			api.setSpectating(p);
 			
@@ -117,7 +117,7 @@ public class MortalListener implements Listener{
 				if(Main.getInstance().chat.get(sender.getName()).equals("spectate")){
 					if(Main.getInstance().chat.get(online.getName()).equals("spectate") || online.isOp()){
 						
-						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Spec" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + "" + sender.getDisplayName() + ChatColor.WHITE + ": " + e.getMessage());
+						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Spec" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ": " + e.getMessage());
 						
 					}
 					

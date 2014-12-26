@@ -64,8 +64,8 @@ public class Main extends JavaPlugin{
 		time.setScore(0);
 		Score round = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Wave: "));
 		round.setScore(0);
-		Score website = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.AQUA + "" + ChatColor.ITALIC +  "kalob.net"));
-		website.setScore(0);
+		Score website = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.RED + "" + ChatColor.ITALIC +  "mortal.gldesert.com"));
+		website.setScore(-9999);
 		
 		CustomEntityType.registerEntities();
 		
