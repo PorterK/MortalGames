@@ -150,6 +150,8 @@ public class MortalListener implements Listener{
 	@EventHandler
 	public void onPlayerDeath(PlayerDeathEvent e){
 		
+		e.setDeathMessage(null);
+		
 		Player a =  e.getEntity();
 		
 		a.setHealth(20);
