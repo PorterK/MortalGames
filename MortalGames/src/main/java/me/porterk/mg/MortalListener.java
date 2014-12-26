@@ -168,17 +168,17 @@ public class MortalListener implements Listener{
 		
 		if(a.getKiller() instanceof Player){
 		
-		e.setDeathMessage(ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " has fallen to " + ChatColor.GOLD + a.getKiller().getName());
+		e.setDeathMessage(Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " has fallen to " + ChatColor.GOLD + a.getKiller().getName());
 		
 		}else{
 			List<String> deathMessage = new ArrayList<String>();
 			
-			String d1 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " couldn't handle the truth!";
-			String d2 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " can't stand the rush!";
-			String d3 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " got rek'd m8.";
-			String d4 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " was terminated.";
-			String d5 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " met their maker";
-			String d6 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " dropped their sword.";
+			String d1 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " couldn't handle the truth!";
+			String d2 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " can't stand the rush!";
+			String d3 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " got rek'd m8.";
+			String d4 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " was terminated.";
+			String d5 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " met their maker";
+			String d6 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " dropped their sword.";
 			
 			deathMessage.add(d1);
 			deathMessage.add(d2);
