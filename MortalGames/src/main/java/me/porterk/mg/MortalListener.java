@@ -1,6 +1,10 @@
 package me.porterk.mg;
 
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -114,7 +118,7 @@ public class MortalListener implements Listener{
 				if(Main.getInstance().chat.get(sender.getName()).equals("orange")){
 					if(Main.getInstance().chat.get(online.getName()).equals("orange") || online.isOp()){
 
-						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + "O" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ":" + e.getMessage());
+						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + "O" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ": " + e.getMessage());
 
 					}
 				}
@@ -166,6 +170,26 @@ public class MortalListener implements Listener{
 		
 		e.setDeathMessage(ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " has fallen to " + ChatColor.GOLD + a.getKiller().getName());
 		
+		}else{
+			List<String> deathMessage = new ArrayList<String>();
+			
+			String d1 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " couldn't handle the truth!";
+			String d2 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " can't stand the rush!";
+			String d3 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " got rek'd m8.";
+			String d4 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " was terminated.";
+			String d5 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " met their maker";
+			String d6 = ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " dropped their sword.";
+			
+			deathMessage.add(d1);
+			deathMessage.add(d2);
+			deathMessage.add(d3);
+			deathMessage.add(d4);
+			deathMessage.add(d5);
+			deathMessage.add(d6);
+			
+			Collections.shuffle(deathMessage);
+			
+			e.setDeathMessage(deathMessage.get(1));
 		}
 	}
 	
