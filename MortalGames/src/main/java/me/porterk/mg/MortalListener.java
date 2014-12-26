@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -24,6 +25,7 @@ import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 
 public class MortalListener implements Listener{
 
@@ -190,6 +192,23 @@ public class MortalListener implements Listener{
 			Collections.shuffle(deathMessage);
 			
 			e.setDeathMessage(deathMessage.get(1));
+		}
+		
+		for(Player p : Bukkit.getServer().getOnlinePlayers()){
+			
+			if(api.spectating.contains(p.getName())){
+				
+				ItemStack i = new ItemStack(397, 1, (short) 3);
+				
+				SkullMeta m = (SkullMeta) i.getItemMeta();
+				
+				m.setOwner(a.getName());
+				
+				i.setItemMeta(m);
+				
+				p.getInventory().remove(i);
+			}
+			
 		}
 	}
 	
