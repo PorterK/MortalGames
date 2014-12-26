@@ -342,7 +342,9 @@ public class MortalAPI {
 							mobAmount = waveNumber * 2;
 							
 							while(mobAmount > 0){
-
+								
+								tar.getWorld().setTime(15000);
+								
 							if(!spectating.contains(tar.getName())){
 
 								int zombie;
@@ -361,8 +363,6 @@ public class MortalAPI {
 
 									z.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
 									world.addEntity(z, SpawnReason.CUSTOM);
-
-									tar.getWorld().setTime(15000);
 									
 									zombie--;
 
