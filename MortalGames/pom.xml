@@ -46,6 +46,17 @@
                 </configuration>
             </plugin>
         </plugins> 
+        <resources>
+            <resource>
+                <directory>src</directory>
+                <!--Replace variables-->
+                <filtering>true</filtering>
+            </resource>
+            <resource>
+                <directory>resources</directory>
+                <filtering>true</filtering>
+			</resource>
+        </resources>
   </build> 
   
   <organization>
