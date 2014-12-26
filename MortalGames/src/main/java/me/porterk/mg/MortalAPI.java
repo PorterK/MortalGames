@@ -24,6 +24,7 @@ import java.util.List;
 
 
 
+
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
@@ -40,6 +41,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.Location;
 
@@ -514,6 +516,24 @@ public class MortalAPI {
 	
 	@SuppressWarnings("deprecation")
 	public void setSpectating(Player p){
+		
+		for(Player pl : Bukkit.getOnlinePlayers()){
+			
+			if(!spectating.contains(pl.getName())){
+				
+				ItemStack i = new ItemStack(397, 1, (short) 3);
+				
+				SkullMeta meta = (SkullMeta) i.getItemMeta();
+				
+				meta.setOwner(pl.getName());
+				
+				i.setItemMeta(meta);
+				
+				p.getInventory().addItem(i);
+				
+			}
+			
+		}
 
 		if(p != null){
 		if(spectating.size() < 10){
