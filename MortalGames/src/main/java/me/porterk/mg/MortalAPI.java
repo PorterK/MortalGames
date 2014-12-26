@@ -529,23 +529,6 @@ public class MortalAPI {
 			
 			p.setGameMode(GameMode.SPECTATOR);
 			
-			for(Player pl : Bukkit.getOnlinePlayers()){
-				
-				if(!spectating.contains(pl.getName())){
-					
-					ItemStack i = new ItemStack(397, 1, (short) 3);
-					
-					SkullMeta meta = (SkullMeta) i.getItemMeta();
-					
-					meta.setOwner(pl.getName());
-					
-					i.setItemMeta(meta);
-					
-					p.getInventory().addItem(i);
-					
-				}
-				
-			}
 		}else{
 			
 			for(Player s : Bukkit.getServer().getOnlinePlayers()){

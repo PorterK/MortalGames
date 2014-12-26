@@ -194,22 +194,6 @@ public class MortalListener implements Listener{
 			e.setDeathMessage(deathMessage.get(1));
 		}
 		
-		for(Player p : Bukkit.getServer().getOnlinePlayers()){
-			
-			if(api.spectating.contains(p.getName())){
-				
-				ItemStack i = new ItemStack(397, 1, (short) 3);
-				
-				SkullMeta m = (SkullMeta) i.getItemMeta();
-				
-				m.setOwner(a.getName());
-				
-				i.setItemMeta(m);
-				
-				p.getInventory().remove(i);
-			}
-			
-		}
 	}
 	
 	 @EventHandler
