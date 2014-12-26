@@ -24,7 +24,6 @@ public class Main extends JavaPlugin{
 	public boolean SQL;
 
 	public FileConfiguration config = getConfig();
-	public static Main plugin;
 	public MySQL ms;
 	public Connection c = null;
 	public String database = config.getString("MySQL.database");
@@ -41,9 +40,17 @@ public class Main extends JavaPlugin{
 	public Score mobs;
 	public Score website;
 	
+	private static Main plugin;
+	
+
+	
+	MortalAPI api = new MortalAPI();
+	
 	@SuppressWarnings("deprecation")
 	@Override
 	public void onEnable(){
+		
+		plugin = this;
 		
 		tag = ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "MG" + ChatColor.DARK_GRAY + "] " + ChatColor.RESET;
 		chat = new HashMap<String, String>();
@@ -62,7 +69,7 @@ public class Main extends JavaPlugin{
 		
 		CustomEntityType.registerEntities();
 		
-		api().config();
+		api.config();
 		try{
 		SQL = config.getBoolean("MySQL.enabled");
 		
@@ -88,37 +95,44 @@ public class Main extends JavaPlugin{
 		c = ms.openConnection();
 		
 		try {
-			config.save(api().configFile());
+			config.save(api.configFile());
 		} catch (IOException e) {
 			e.printStackTrace();
 		}	
 		try{
-			getServer().getPluginManager().registerEvents(new MortalListener(this), this);
-			api().debugLog("Listener class registered!");
+			getServer().getPluginManager().registerEvents(new MortalListener(), this);
+			api.debugLog("Listener class registered!");
 		}catch(NullPointerException e){
 			e.printStackTrace();
-			api().debugLog("Listener class not registered! (NullPointerException)");
+			api.debugLog("Listener class not registered! (NullPointerException)");
 		}
-		api().debugLog("Plugin enabled!");
+		api.debugLog("Plugin enabled!");
 		
 		try{
-		api().buildPrefab();
+		api.buildPrefab();
 		Bukkit.getServer().getLogger().log(Level.INFO, "Team bases constructed");
 		}catch(Exception e){
-			api().debugLog(e.toString());
+			api.debugLog(e.toString());
 			e.printStackTrace();
 		}
 	}
 	
 	@Override
 	public void onDisable(){
-		api().debugLog("Plugin disabled!");
+		api.debugLog("Plugin disabled!");
 		chat.clear();
 		CustomEntityType.unregisterEntities();
+		
+		plugin = null;
 	}
 
-	public MortalAPI api() {
-		return new MortalAPI(this);
+	public static Main getInstance(){
+		
+		if(plugin == null){
+			plugin = new Main();
+		}
+		
+		return plugin;
 	}
 	public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
 
@@ -171,7 +185,7 @@ public class Main extends JavaPlugin{
 
 						if(args[2].equalsIgnoreCase("game")){
 
-							api().startGame();
+							api.startGame();
 
 						}
 
@@ -187,7 +201,7 @@ public class Main extends JavaPlugin{
 
 											try{
 
-												api().waveNumber = Integer.parseInt(args[4]);
+												api.waveNumber = Integer.parseInt(args[4]);
 
 											}catch(Exception e){
 
@@ -196,19 +210,19 @@ public class Main extends JavaPlugin{
 											}
 
 										}else{
-											api().waveNumber += 1;
+											api.waveNumber += 1;
 
 										}
-										api().startWave();
+										api.startWave();
 									}
 
 								}else{
 
-									api().preWave();
+									api.preWave();
 								}
 
 							}else{
-								api().preWave();
+								api.preWave();
 							}
 
 

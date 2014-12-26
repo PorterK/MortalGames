@@ -42,12 +42,6 @@ import org.bukkit.Location;
 
 public class MortalAPI {
 
-	Main plugin;
-
-	public MortalAPI(Main plugin) {
-		this.plugin = plugin;
-	}
-
 	public int beforeStart;
 	public int preGameTime;
 	public int wave;
@@ -67,8 +61,8 @@ public class MortalAPI {
 	
 	public void config(){
 
-		File config = new File(plugin.getDataFolder() + "/config.yml");
-		File dir = plugin.getDataFolder();
+		File config = new File(Main.getInstance().getDataFolder() + "/config.yml");
+		File dir = Main.getInstance().getDataFolder();
 		try{
 			if(!dir.exists()){
 				dir.mkdirs();
@@ -85,20 +79,20 @@ public class MortalAPI {
 
 	public File configFile(){
 
-		File config = new File(plugin.getDataFolder() + "/config.yml");
+		File config = new File(Main.getInstance().getDataFolder() + "/config.yml");
 
 		return config;
 	}
 
 	public void debugLog(String logMessage){
 
-		if(plugin.config.getBoolean("Dev Mode")){
+		if(Main.getInstance().config.getBoolean("Dev Mode")){
 			Date date = new Date();
 			SimpleDateFormat d1 = new SimpleDateFormat("MM-dd-yyyy");
 			String t = d1.format(date);
-			File directory = plugin.getDataFolder();
+			File directory = Main.getInstance().getDataFolder();
 			File logFolder = new File(directory, "/log");
-			File logFile = new File("plugins/Mortal Games/log/" + t + ".txt");
+			File logFile = new File("Main.getInstance()s/Mortal Games/log/" + t + ".txt");
 			try{
 				if(!directory.exists()){
 					directory.mkdirs();
@@ -131,59 +125,59 @@ public class MortalAPI {
 
 		preGameTime = 301;
 
-		beforeStart = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() {
+		beforeStart = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 
 			@SuppressWarnings("deprecation")
 			public void run(){
 				
 
 				preGameTime--;
-				final Score time = plugin.obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Time: "));
+				final Score time = Main.getInstance().obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Time: "));
 				time.setScore(preGameTime);
 
 				switch(preGameTime){
 
-				case 300: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "5 minutes");
+				case 300: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "5 minutes");
 				break;
-				case 240: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "4 minutes");
+				case 240: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "4 minutes");
 				break;
-				case 180: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "3 minutes");
+				case 180: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "3 minutes");
 				break;
-				case 120: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "2 minutes");
+				case 120: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "2 minutes");
 				break;
-				case 60: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "1 minute");
+				case 60: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "1 minute");
 				break;
-				case 30: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "30 seconds");
+				case 30: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "30 seconds");
 				break;
-				case 10: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "10 seconds");
+				case 10: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "10 seconds");
 				break;
-				case 9: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "9 seconds");
+				case 9: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "9 seconds");
 				break;
-				case 8: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "8 seconds");
+				case 8: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "8 seconds");
 				break;
-				case 7: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "7 seconds");
+				case 7: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "7 seconds");
 				break;
-				case 6: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "6 seconds");
+				case 6: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "6 seconds");
 				break;
-				case 5: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "5 seconds");
+				case 5: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "5 seconds");
 				break;
-				case 4: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "4 seconds");
+				case 4: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "4 seconds");
 				break;
-				case 3: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "3 seconds");
+				case 3: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "3 seconds");
 				break;
-				case 2: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "2 seconds");
+				case 2: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "2 seconds");
 				break;
-				case 1: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "1 seconds");
+				case 1: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Game starting in " + ChatColor.DARK_RED + "1 seconds");
 				break;
-				case 0: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GREEN + "Prepare yourself,"  + ChatColor.DARK_RED + " mortal" +
+				case 0: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GREEN + "Prepare yourself,"  + ChatColor.DARK_RED + " mortal" +
 						ChatColor.GREEN + ", the game is starting...");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.ENDERDRAGON_GROWL, 10, 1);
 				}
 
 				debugLog("Game started");
 				
-				plugin.getServer().getScheduler().cancelTask(beforeStart);
+				Main.getInstance().getServer().getScheduler().cancelTask(beforeStart);
 
 				gameStart();
 				
@@ -200,7 +194,7 @@ public class MortalAPI {
 
 	public void gameStart(){
 		
-		plugin.getServer().getScheduler().cancelTask(beforeStart);
+		Main.getInstance().getServer().getScheduler().cancelTask(beforeStart);
 
 		List<Player> players = new ArrayList<Player>();
 		for (Player player : Bukkit.getOnlinePlayers()) {
@@ -219,11 +213,11 @@ public class MortalAPI {
 				(teamNumber == 9)
 					) {
 				team.put(player, "orange");
-				plugin.chat.put(player.getName(), "orange");
+				Main.getInstance().chat.put(player.getName(), "orange");
 				player.sendMessage("You're on the " + ChatColor.GOLD + "orange " + ChatColor.WHITE + "team");
 			}else{
 				team.put(player, "green");
-				plugin.chat.put(player.getName(), "green");
+				Main.getInstance().chat.put(player.getName(), "green");
 				player.sendMessage("You're on the " + ChatColor.GREEN + "green " + ChatColor.WHITE + "team");
 			}
 		}
@@ -231,86 +225,86 @@ public class MortalAPI {
 	}
 	public void preWave(){
 		
-		plugin.getServer().getScheduler().cancelTask(wave);
+		Main.getInstance().getServer().getScheduler().cancelTask(wave);
 
 		preWaveCount = 121;
 
-		preWave = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() { 
+		preWave = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() { 
 
 			@SuppressWarnings("deprecation")
 			public void run(){
 
 				preWaveCount--;
 				
-				final Score time = plugin.obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Time: "));
+				final Score time = Main.getInstance().obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Time: "));
 				time.setScore(preWaveCount);
 				
 				switch(preWaveCount){
 
-				case 120: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1) + " starts in " + ChatColor.DARK_RED + "2 minutes" + ChatColor.GOLD + ".");
+				case 120: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1) + " starts in " + ChatColor.DARK_RED + "2 minutes" + ChatColor.GOLD + ".");
 				break;
-				case 60: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "1 minute" + ChatColor.GOLD + ".");
+				case 60: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "1 minute" + ChatColor.GOLD + ".");
 				break;
-				case 30: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "30 seconds" + ChatColor.GOLD + ".");
+				case 30: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "30 seconds" + ChatColor.GOLD + ".");
 				break;
-				case 10: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "10 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 10: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "10 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 9: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "9 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 9: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "9 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 8: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "8 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 8: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "8 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 7: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "7 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 7: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "7 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 6: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "6 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 6: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "6 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 5: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "5 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 5: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "5 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 4: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "4 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 4: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "4 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 3: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "3 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 3: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "3 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 2: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "2 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 2: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "2 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 1: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "1 seconds" + ChatColor.GOLD + ".");
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				case 1: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Wave " + (waveNumber + 1)  + " starts in " + ChatColor.DARK_RED + "1 seconds" + ChatColor.GOLD + ".");
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.playSound(p.getLocation(), Sound.CLICK, 10, 1);
 				}
 				break;
-				case 0: plugin.getServer().broadcastMessage(plugin.tag + ChatColor.GOLD + "Prepare yourself, wave " + (waveNumber + 1) + " is starting...");
-				plugin.getServer().getScheduler().cancelAllTasks();
+				case 0: Main.getInstance().getServer().broadcastMessage(Main.getInstance().tag + ChatColor.GOLD + "Prepare yourself, wave " + (waveNumber + 1) + " is starting...");
+				Main.getInstance().getServer().getScheduler().cancelAllTasks();
 				startWave();
-				for(final Player p : plugin.getServer().getOnlinePlayers()){
+				for(final Player p : Main.getInstance().getServer().getOnlinePlayers()){
 				p.getWorld().strikeLightningEffect(p.getLocation());
 				p.playSound(p.getLocation(), Sound.ZOMBIE_IDLE, 10, 1);
 				}
-				final Score round = plugin.obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Wave: "));
+				final Score round = Main.getInstance().obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Wave: "));
 				waveNumber += 1;
 				round.setScore(waveNumber);
 				return;
@@ -329,7 +323,7 @@ public class MortalAPI {
 
 				waveCount = 3;
 
-				wave = plugin.getServer().getScheduler().scheduleSyncRepeatingTask(plugin, new Runnable() { 
+				wave = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() { 
 
 					public void run(){
 
@@ -343,7 +337,7 @@ public class MortalAPI {
 							
 						}
 
-						for(Player tar : plugin.getServer().getOnlinePlayers()){
+						for(Player tar : Main.getInstance().getServer().getOnlinePlayers()){
 							
 							mobAmount = waveNumber * 2;
 
@@ -470,11 +464,11 @@ public class MortalAPI {
 
 			name = p.getName();
 
-			plugin.cs = plugin.c.createStatement();
-			ResultSet res = plugin.cs.executeQuery("SELECT * FROM mortal WHERE PlayerName = '" + name + "';");
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mortal WHERE PlayerName = '" + name + "';");
 
 			if(!res.next()){
-				plugin.cs.executeUpdate("INSERT INTO mortal (`PlayerName`, `inGameCash`, `totalCash`, " +
+				Main.getInstance().cs.executeUpdate("INSERT INTO mortal (`PlayerName`, `inGameCash`, `totalCash`, " +
 						"`totalKills`, `serverCash`, `rank`) VALUES ('" + p.getName() + "', '500', '500', '0', '0', 'Default');");
 			}else{
 				res.next();
@@ -507,15 +501,13 @@ public class MortalAPI {
 		
 	}
 	
-	public void setSpectating(Player p, Main plugin){
-		
-		this.plugin = plugin;
+	public void setSpectating(Player p){
 
 		if(p != null){
 		if(spectating.size() < 10){
 			
-			plugin.chat.put(p.getName(), "spectate");
-			p.sendMessage(plugin.tag + ChatColor.AQUA + "You are now spectating.");
+			Main.getInstance().chat.put(p.getName(), "spectate");
+			p.sendMessage(Main.getInstance().tag + ChatColor.AQUA + "You are now spectating.");
 			p.getInventory().clear();
 			
 			spectating.add(p.getName());

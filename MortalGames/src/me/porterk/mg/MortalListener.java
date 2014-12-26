@@ -13,22 +13,11 @@ import org.bukkit.event.player.PlayerQuitEvent;
 
 public class MortalListener implements Listener{
 
-	Main plugin;
-
-	public MortalListener(Main plugin) {
-		this.plugin = plugin;
-	}
-
-
-	MortalAPI api = new MortalAPI(plugin);
-	
-	
-
 	public void scoreboard(Player p) {
-		p.setScoreboard(plugin.s);
+		p.setScoreboard(Main.getInstance().s);
 	}
 
-
+	MortalAPI api = new MortalAPI();
 
 	@EventHandler
 	public void onPlayerLogin(PlayerJoinEvent e){
@@ -38,7 +27,7 @@ public class MortalListener implements Listener{
 		Player p = e.getPlayer();
 		int playerCount = p.getServer().getOnlinePlayers().size();
 		
-		plugin.chat.put(p.getName(), "general");
+		Main.getInstance().chat.put(p.getName(), "general");
 		
 		if(playerCount < 10){
 			p.sendMessage(ChatColor.GOLD + "Welcome, "  + ChatColor.GREEN + p.getDisplayName() +
@@ -51,7 +40,7 @@ public class MortalListener implements Listener{
 			p.sendMessage(ChatColor.GOLD + "Welcome to " + ChatColor.DARK_RED + "The Mortal Games!");
 			p.sendMessage(ChatColor.BLUE + "Visit my website at" + ChatColor.RED + " kalob.net!");
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
-			api.setSpectating(p, plugin);
+			api.setSpectating(p);
 			
 			
 		}
@@ -65,7 +54,7 @@ public class MortalListener implements Listener{
 		}
 		
 		if(api.isGameOn()){
-			api.setSpectating(p, plugin);
+			api.setSpectating(p);
 		}
 
 
@@ -74,7 +63,7 @@ public class MortalListener implements Listener{
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e){	
 		String name = e.getPlayer().getName();
-		e.setQuitMessage(plugin.tag + name + " chickened out!");
+		e.setQuitMessage(Main.getInstance().tag + name + " chickened out!");
 	}
 
 	@EventHandler
@@ -83,14 +72,14 @@ public class MortalListener implements Listener{
 
 		Player sender = e.getPlayer();
 
-		for(Player online : plugin.getServer().getOnlinePlayers()){
+		for(Player online : Main.getInstance().getServer().getOnlinePlayers()){
 
 
-			if(plugin.chat.containsKey(sender.getName())){
+			if(Main.getInstance().chat.containsKey(sender.getName())){
 
-				if(plugin.chat.get(sender.getName()).equals("general")){
+				if(Main.getInstance().chat.get(sender.getName()).equals("general")){
 
-					if(plugin.chat.get(online.getName()).equals("general") || online.isOp()){
+					if(Main.getInstance().chat.get(online.getName()).equals("general") || online.isOp()){
 
 
 						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.YELLOW + "G" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE +": " + e.getMessage());
@@ -98,9 +87,9 @@ public class MortalListener implements Listener{
 					}
 				}
 
-				if(plugin.chat.get(sender.getName()).equals("green")){	
+				if(Main.getInstance().chat.get(sender.getName()).equals("green")){	
 
-					if(plugin.chat.get(online.getName()).equals("green") || online.isOp()){
+					if(Main.getInstance().chat.get(online.getName()).equals("green") || online.isOp()){
 
 						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GREEN + "Gr" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ": " + e.getMessage());
 
@@ -108,8 +97,8 @@ public class MortalListener implements Listener{
 					}
 				}
 
-				if(plugin.chat.get(sender.getName()).equals("orange")){
-					if(plugin.chat.get(online.getName()).equals("orange") || online.isOp()){
+				if(Main.getInstance().chat.get(sender.getName()).equals("orange")){
+					if(Main.getInstance().chat.get(online.getName()).equals("orange") || online.isOp()){
 
 						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.GOLD + "O" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ":" + e.getMessage());
 
@@ -117,16 +106,16 @@ public class MortalListener implements Listener{
 				}
 
 
-				if(plugin.chat.get(sender.getName()).equals("admin")){
-					if(plugin.chat.get(online.getName()).equals("admin") || online.isOp()){
+				if(Main.getInstance().chat.get(sender.getName()).equals("admin")){
+					if(Main.getInstance().chat.get(online.getName()).equals("admin") || online.isOp()){
 
 						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_RED + "A" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ": " + ChatColor.GRAY + "" + ChatColor.ITALIC + "" + e.getMessage());
 
 					}
 				}
 				
-				if(plugin.chat.get(sender.getName()).equals("spectate")){
-					if(plugin.chat.get(online.getName()).equals("spectate") || online.isOp()){
+				if(Main.getInstance().chat.get(sender.getName()).equals("spectate")){
+					if(Main.getInstance().chat.get(online.getName()).equals("spectate") || online.isOp()){
 						
 						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.AQUA + "Spec" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + "" + sender.getDisplayName() + ChatColor.WHITE + ": " + e.getMessage());
 						
@@ -156,7 +145,7 @@ public class MortalListener implements Listener{
 		
 		a.setHealth(20);
 		
-		api.setSpectating(a, plugin);
+		api.setSpectating(a);
 		
 		if(a.getKiller() instanceof Player){
 		
