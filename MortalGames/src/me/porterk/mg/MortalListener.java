@@ -2,7 +2,10 @@ package me.porterk.mg;
 
 
 import org.bukkit.ChatColor;
+import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.entity.Arrow;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -12,6 +15,7 @@ import org.bukkit.event.entity.CreatureSpawnEvent;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
@@ -163,9 +167,9 @@ public class MortalListener implements Listener{
 	 @EventHandler
 	    public void onEntityDamage(EntityDamageByEntityEvent e) {
 		 
-		 Player p = (Player) e.getEntity();
-		 Player a = (Player) e.getDamager();
 	        if (e.getDamager() instanceof Player){
+	        	 Player p = (Player) e.getDamager();
+	    		 Player a = (Player) e.getDamager();
 	            if (e.getEntity() instanceof Player) {
 	            	
 	            	if(!api.allowPVP()){
@@ -192,8 +196,7 @@ public class MortalListener implements Listener{
 			 
 			 if(e.getEntity().getType().equals(EntityType.ZOMBIE)){
 				 
-				 e.getDrops().remove(Material.ROTTEN_FLESH);
-				 e.getDrops().remove(Material.IRON_INGOT);
+				 e.getDrops().clear();
 				
 				 e.getDrops().add(new ItemStack(Material.BREAD, 1));
 				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(0, 5))); //Will eventually be currency
@@ -202,9 +205,7 @@ public class MortalListener implements Listener{
 			 
 			 if(e.getEntity().getType().equals(EntityType.SKELETON)){
 				 
-				 e.getDrops().remove(Material.BONE);
-				 e.getDrops().remove(Material.ARROW);
-				 e.getDrops().remove(Material.BOW);
+				 e.getDrops().clear();
 				 
 				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(3, 6)));
 				 
@@ -212,8 +213,7 @@ public class MortalListener implements Listener{
 			 
 			 if(e.getEntity().getType().equals(EntityType.SPIDER)){
 				 
-				 e.getDrops().remove(Material.SPIDER_EYE);
-				 e.getDrops().remove(Material.STRING);
+				 e.getDrops().clear();
 				 
 				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(4, 7)));
 				 
@@ -229,7 +229,28 @@ public class MortalListener implements Listener{
 		 Player p = e.getPlayer();
 		 
 		 if(!p.isOp()){
-		 e.setCancelled(api.canBuild());
+		 	if(!api.canBuild()){
+		 		e.setCancelled(true);
+		 	}
+		 }
+		 
+	 }
+	 
+	 @EventHandler
+	 public void onProjectileHit(ProjectileHitEvent e){
+		 
+		Entity a = e.getEntity();
+		
+		if(a instanceof Arrow){			
+				
+				if(!(((Arrow) a).getShooter() instanceof Player)){
+				Location l = a.getLocation();
+				 
+				 l.getWorld().createExplosion(l, 3);
+				 
+				 a.remove();
+				}
+				
 		 }
 		 
 	 }

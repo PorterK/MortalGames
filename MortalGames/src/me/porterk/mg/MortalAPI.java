@@ -124,6 +124,7 @@ public class MortalAPI {
 	}
 
 	public void startGame(){
+		setCanBuild(true);
 
 		preGameTime = 301;
 
@@ -345,8 +346,6 @@ public class MortalAPI {
 						for(Player tar : Main.getInstance().getServer().getOnlinePlayers()){
 							
 							mobAmount = waveNumber * 2;
-							
-							while(mobAmount > 0){
 								
 								tar.getWorld().setTime(15000);
 								
@@ -379,7 +378,6 @@ public class MortalAPI {
 									int skeleton;
 									
 									skeleton = random((waveNumber / 2), waveNumber);
-									mobAmount -= skeleton;
 									
 									while(skeleton > 0){
 										
@@ -399,11 +397,6 @@ public class MortalAPI {
 											
 											bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
 											
-											if(waveNumber >= 7){
-												bow.addEnchantment(Enchantment.ARROW_FIRE, 1);
-												bow.addEnchantment(Enchantment.ARROW_DAMAGE, 3);
-											}
-											
 											Skeleton sk = (Skeleton) s.getBukkitEntity();
 											
 											EntityEquipment se = (EntityEquipment) sk.getEquipment();
@@ -421,7 +414,6 @@ public class MortalAPI {
 									int spider;
 									
 									spider = random(waveNumber / 5, waveNumber / 2);
-									mobAmount -= spider;
 									
 									while(spider > 0){
 										
@@ -444,7 +436,6 @@ public class MortalAPI {
 								}
 							}
 						}
-					}
 
 					}
 
