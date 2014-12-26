@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.CreatureSpawnEvent;
+import org.bukkit.event.entity.EntityDamageByEntityEvent;
 import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.AsyncPlayerChatEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -153,5 +154,30 @@ public class MortalListener implements Listener{
 		
 		}
 	}
+	
+	 @EventHandler
+	    public void onEntityDamage(EntityDamageByEntityEvent e) {
+		 
+		 Player p = (Player) e.getEntity();
+		 Player a = (Player) e.getDamager();
+	        if (e.getDamager() instanceof Player){
+	            if (e.getEntity() instanceof Player) {
+	            	
+	            	if(!api.allowPVP()){
+	            		e.setCancelled(true);
+	            		p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "PVP is not enabled yet.");
+	            	}else{
+	            		
+	            		if(api.getTeam(p) == api.getTeam(a)){
+	            			
+	            			p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "You may not attack your team mates.");
+	            			e.setCancelled(true);
+	            			
+	            		}
+	            		
+	            	}
+	            }
+	        }
+	    }
 
 }

@@ -51,6 +51,7 @@ public class MortalAPI {
 	public int preWaveCount;
 	public int mobAmount;
 	protected boolean isGameOn;
+	protected boolean pvp;
 	int cash;
 	int teamNumber;
 	Statement s = null;
@@ -445,7 +446,13 @@ public class MortalAPI {
 
 				}, 0L, 960L);
 
-
+				if(waveNumber > 10){
+					
+					setAllowPVP(true);
+					
+				}else{
+					setAllowPVP(false);
+				}
 
 
 			}
@@ -545,6 +552,15 @@ public class MortalAPI {
 		
 		spectating.remove(p.getName());
 		
+	}
+	
+	public void setAllowPVP(Boolean b){
+		pvp = b;
+	}
+	
+	public Boolean allowPVP(){
+		
+		return pvp;
 	}
 
 }
