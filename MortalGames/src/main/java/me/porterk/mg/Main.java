@@ -10,6 +10,9 @@ import me.porterk.mg.mobs.CustomEntityType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -20,6 +23,8 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
+import org.kitteh.vanish.staticaccess.VanishNoPacket;
+import org.kitteh.vanish.staticaccess.VanishNotLoadedException;
 
 public class Main extends JavaPlugin{
 	public boolean SQL;
@@ -256,4 +261,41 @@ public class Main extends JavaPlugin{
 
 		return false;
 	}
+	
+	@SuppressWarnings("deprecation")
+	public static void createHelixAsync(final Player player)
+	{
+	  Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable()
+	  {
+	    public void run()
+	    {
+	    	try {
+				if (VanishNoPacket.isVanished(player.getName()))
+				{
+	            	//player.sendMessage (ChatColor.BLUE + "You are vanished! No can do.");
+				}else{
+	            	//player.sendMessage (ChatColor.BLUE + "Vwoosh!");
+	            	createHelix(player);
+	            	//Moved into createHelix to prevent ear rape.. Sounds kinda cool but glitchy if both.
+	            	player.playSound(player.getLocation(),Sound.ENDERMAN_TELEPORT,1, 1.3F);	
+				}
+			} catch (VanishNotLoadedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	     }
+	  }
+	  ,(1) * 1L);
+	}
+
+public static void createHelix(Player player) {
+    int radius = 2;
+    for (double y = 0; y <= 50; y+=0.05) {
+        double x = radius * Math.cos(y);
+        double z = radius * Math.sin(y);
+        Location loc = new Location(player.getLocation().getWorld(), player.getLocation().getX() + x, player.getLocation().getY() + y, player.getLocation().getZ() + z);
+        loc.getWorld().playEffect(loc, Effect.WITCH_MAGIC, 0);
+        //player.playSound(player.getLocation(),Sound.ENDERMAN_TELEPORT,1, 1.3F);
+    }
+}
 }
