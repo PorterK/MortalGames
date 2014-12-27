@@ -25,6 +25,8 @@ import java.util.List;
 
 
 
+
+
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
@@ -34,6 +36,8 @@ import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
+import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
@@ -65,6 +69,7 @@ public class MortalAPI {
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
 	HashMap<Player, String> team = new HashMap<Player, String>();
 	ArrayList<String> spectating =  new ArrayList<String>();
+	private FileConfiguration customConfig = null;
 	
 	public void config(){
 
@@ -99,7 +104,7 @@ public class MortalAPI {
 			String t = d1.format(date);
 			File directory = Main.getInstance().getDataFolder();
 			File logFolder = new File(directory, "/log");
-			File logFile = new File("Main.getInstance()s/Mortal Games/log/" + t + ".txt");
+			File logFile = new File("plugins/Mortal Games/log/" + t + ".txt");
 			try{
 				if(!directory.exists()){
 					directory.mkdirs();
@@ -123,6 +128,55 @@ public class MortalAPI {
 		}
 	}
 
+	public void buildMapYML(){
+		
+		File directory = Main.getInstance().getDataFolder();
+		File mapdata = new File(directory, "/world_data");
+		File yml = new File(mapdata + "/data.yml");
+		
+		try{
+			if(!directory.exists()){
+				directory.mkdirs();
+			}
+			
+			if(!mapdata.exists()){
+				mapdata.mkdirs();
+			}
+			
+			if(!yml.exists()){
+				yml.createNewFile();
+			}
+			
+			customConfig = YamlConfiguration.loadConfiguration(yml);
+			
+			customConfig.addDefault("map_name", "MAP_NAME_HERE");
+			customConfig.addDefault("team.orange.base.x",  "0");
+			customConfig.addDefault("team.orange.base.y",  "0");
+			customConfig.addDefault("team.orange.base.z",  "0");
+			customConfig.addDefault("team.orange.trader.x", "0");
+			customConfig.addDefault("team.orange.trader.y", "0");
+			customConfig.addDefault("team.orange.trader.z", "0");
+			customConfig.addDefault("team.green.base.x",  "0");
+			customConfig.addDefault("team.green.base.y",  "0");
+			customConfig.addDefault("team.green.base.z",  "0");
+			customConfig.addDefault("team.green.trader.x", "0");
+			customConfig.addDefault("team.green.trader.y", "0");
+			customConfig.addDefault("team.green.trader.z", "0");
+			customConfig.addDefault("drop_rate", "100"); //drop rates in percent
+			customConfig.options().copyDefaults(true);
+			
+			getCustomConfig().save(yml);
+		}catch(IOException e){
+			e.printStackTrace();
+		}
+		
+	}
+
+	public FileConfiguration getCustomConfig() {
+
+	    return customConfig;
+	}
+	
 	public boolean isGameOn(){
 
 		return isGameOn;

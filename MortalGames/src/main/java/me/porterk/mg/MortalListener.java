@@ -61,7 +61,6 @@ public class MortalListener implements Listener{
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
 			api.setSpectating(p);
 			
-			
 		}
 
 		if(p.isOp()){

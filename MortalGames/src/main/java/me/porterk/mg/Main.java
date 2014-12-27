@@ -115,6 +115,7 @@ public class Main extends JavaPlugin{
 		
 		try{
 		api.buildPrefab();
+		api.buildMapYML();
 		Bukkit.getServer().getLogger().log(Level.INFO, "Team bases constructed");
 		}catch(Exception e){
 			api.debugLog(e.toString());
