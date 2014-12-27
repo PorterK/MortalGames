@@ -10,7 +10,7 @@ public class MortalSkeleton extends EntitySkeleton{
 		super(world);
 		
 		try {
-			this.getAttributeInstance(GenericAttributes.b).setValue(80);
+			this.getAttributeInstance(GenericAttributes.b).setValue(160);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}

@@ -23,7 +23,7 @@ public class MortalZombie extends EntityZombie{
 			cField.set(goalSelector, new UnsafeList<PathfinderGoalSelector>());
 			cField.set(targetSelector, new UnsafeList<PathfinderGoalSelector>());
 			
-			this.getAttributeInstance(GenericAttributes.b).setValue(80);
+			this.getAttributeInstance(GenericAttributes.b).setValue(160);
 		} catch (Exception exc) {
 			exc.printStackTrace();
 		}
