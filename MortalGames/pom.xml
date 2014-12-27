@@ -72,13 +72,6 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/spigot-1.8-R0.1-SNAPSHOT.jar</systemPath>
         </dependency>
-        <dependency>
-            <groupId>org.kitteh</groupId>
-            <artifactId>VanishNoPacket</artifactId>
-            <version>3.19.2-SNAPSHOT-no-rev</version>
-            <scope>system</scope>
-            <systemPath>${project.basedir}/lib/VanishNoPacket.jar</systemPath>
-        </dependency>
 </dependencies>
 
 </project>

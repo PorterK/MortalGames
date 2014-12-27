@@ -23,8 +23,6 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
-import org.kitteh.vanish.staticaccess.VanishNoPacket;
-import org.kitteh.vanish.staticaccess.VanishNotLoadedException;
 
 public class Main extends JavaPlugin{
 	public boolean SQL;
@@ -269,20 +267,11 @@ public class Main extends JavaPlugin{
 	  {
 	    public void run()
 	    {
-	    	try {
-				if (VanishNoPacket.isVanished(player.getName()))
-				{
-	            	//player.sendMessage (ChatColor.BLUE + "You are vanished! No can do.");
-				}else{
 	            	//player.sendMessage (ChatColor.BLUE + "Vwoosh!");
 	            	createHelix(player);
 	            	//Moved into createHelix to prevent ear rape.. Sounds kinda cool but glitchy if both.
 	            	player.playSound(player.getLocation(),Sound.ENDERMAN_TELEPORT,1, 1.3F);	
-				}
-			} catch (VanishNotLoadedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+
 	     }
 	  }
 	  ,(1) * 1L);
