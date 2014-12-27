@@ -27,6 +27,8 @@ import java.util.List;
 
 
 
+
+
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
@@ -45,7 +47,6 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.Location;
 
@@ -383,15 +384,27 @@ public class MortalAPI {
 		
 	}
 
+	@SuppressWarnings("deprecation")
 	public void startWave(){
 				
 				setCanBuild(false);
+				
+				for(Player p : Bukkit.getServer().getOnlinePlayers()){
+					String team = getTeam(p);
+					
+					int x = (Integer) customConfig.get("team." + team + ".base.x");
+					int y = (Integer) customConfig.get("team." + team + ".base.y");
+					int z = (Integer) customConfig.get("team." + team + ".base.z");
+					
+					Location base = new Location(p.getWorld(), x, y, z);
+					
+					p.teleport(base);
+				}
 
 				waveCount = 3;
 
 				wave = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() { 
 
-					@SuppressWarnings("deprecation")
 					public void run(){
 
 						waveCount--;
@@ -405,7 +418,7 @@ public class MortalAPI {
 						}
 
 						for(Player tar : Main.getInstance().getServer().getOnlinePlayers()){
-							
+									
 							mobAmount = waveNumber * 2;
 								
 								tar.getWorld().setTime(15000);
