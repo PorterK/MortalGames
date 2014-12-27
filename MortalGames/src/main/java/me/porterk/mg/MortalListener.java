@@ -25,6 +25,10 @@ import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.ItemStack;
 
+//TPHelix Stuff
+import org.bukkit.event.player.PlayerTeleportEvent;
+import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
+
 public class MortalListener implements Listener{
 
 	public void scoreboard(Player p) {
@@ -283,6 +287,16 @@ public class MortalListener implements Listener{
 				
 		 }
 		 
+	 }
+	 
+	 @EventHandler
+	 public void onPlayerTeleport(PlayerTeleportEvent event)
+	 {
+	 	
+	 	if (event.getCause() == TeleportCause.COMMAND || event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.ENDER_PEARL)
+	     {
+	 		Main.createHelixAsync(event.getPlayer());
+	     }  		
 	 }
 
 }

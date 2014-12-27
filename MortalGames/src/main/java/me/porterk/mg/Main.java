@@ -10,6 +10,9 @@ import me.porterk.mg.mobs.CustomEntityType;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
+import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
@@ -256,4 +259,32 @@ public class Main extends JavaPlugin{
 
 		return false;
 	}
+	
+	@SuppressWarnings("deprecation")
+	public static void createHelixAsync(final Player player)
+	{
+	  Bukkit.getServer().getScheduler().scheduleAsyncDelayedTask(plugin, new Runnable()
+	  {
+	    public void run()
+	    {
+	            	//player.sendMessage (ChatColor.BLUE + "Vwoosh!");
+	            	createHelix(player);
+	            	//Moved into createHelix to prevent ear rape.. Sounds kinda cool but glitchy if both.
+	            	player.playSound(player.getLocation(),Sound.ENDERMAN_TELEPORT,1, 1.3F);	
+
+	     }
+	  }
+	  ,(1) * 1L);
+	}
+
+public static void createHelix(Player player) {
+    int radius = 2;
+    for (double y = 0; y <= 50; y+=0.05) {
+        double x = radius * Math.cos(y);
+        double z = radius * Math.sin(y);
+        Location loc = new Location(player.getLocation().getWorld(), player.getLocation().getX() + x, player.getLocation().getY() + y, player.getLocation().getZ() + z);
+        loc.getWorld().playEffect(loc, Effect.WITCH_MAGIC, 0);
+        //player.playSound(player.getLocation(),Sound.ENDERMAN_TELEPORT,1, 1.3F);
+    }
+}
 }
