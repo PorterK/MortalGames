@@ -3,6 +3,7 @@ package me.porterk.mg;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 import org.bukkit.ChatColor;
@@ -30,6 +31,8 @@ import org.bukkit.event.player.PlayerTeleportEvent;
 import org.bukkit.event.player.PlayerTeleportEvent.TeleportCause;
 
 public class MortalListener implements Listener{
+	
+	List<String> team;
 
 	public void scoreboard(Player p) {
 		p.setScoreboard(Main.getInstance().s);
@@ -55,11 +58,31 @@ public class MortalListener implements Listener{
 			p.sendMessage(ChatColor.GOLD + "There are currently " + ChatColor.DARK_RED + playerCount
 					+ "/10" + ChatColor.GOLD +" players online!");
 			scoreboard(p);
+			
+			if(api.isGameOn){
+				int number = 0; 
+				
+				while(!team.isEmpty()){
+				number ++;
+				
+				String t = api.team.get(team.get(number));
+				
+				if(t != null){
+				
+				api.team.put(p, team.get(number));
+				team.remove(number);
+				
+				}
+				
+				}
+				
+			}
 		}else if(playerCount >= 10){
 			p.sendMessage(ChatColor.GOLD + "Welcome to " + ChatColor.DARK_RED + "The Mortal Games!");
 			p.sendMessage(ChatColor.BLUE + "Visit our website at" + ChatColor.RED + " mortal.gldesert.com");
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
 			api.setSpectating(p);
+			scoreboard(p);
 			
 		}
 
@@ -288,13 +311,22 @@ public class MortalListener implements Listener{
 	 }
 	 
 	 @EventHandler
-	 public void onPlayerTeleport(PlayerTeleportEvent event)
-	 {
+	 public void onPlayerTeleport(PlayerTeleportEvent event){
 	 	
 	 	if (event.getCause() == TeleportCause.COMMAND || event.getCause() == TeleportCause.PLUGIN || event.getCause() == TeleportCause.ENDER_PEARL)
 	     {
 	 		Main.createHelixAsync(event.getPlayer());
 	     }  		
+	 }
+	 
+	 @EventHandler
+	 public void onPlayerQuit(PlayerQuitEvent e){
+		 
+		 Player p = e.getPlayer();
+		 
+		 team.add(api.team.get(p));
+		 
+		 e.setQuitMessage(null); 
 	 }
 
 }

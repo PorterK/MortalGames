@@ -264,10 +264,18 @@ public class MortalAPI {
 				team.put(player, "orange");
 				Main.getInstance().chat.put(player.getName(), "orange");
 				player.sendMessage("You're on the " + ChatColor.GOLD + "orange " + ChatColor.WHITE + "team");
-			}else{
+			}else if((teamNumber == 0) ||
+					(teamNumber == 2) ||
+					(teamNumber == 4) ||
+					(teamNumber == 6) ||
+					(teamNumber == 8) ||
+					(teamNumber == 10)){
 				team.put(player, "green");
 				Main.getInstance().chat.put(player.getName(), "green");
 				player.sendMessage("You're on the " + ChatColor.GREEN + "green " + ChatColor.WHITE + "team");
+			}else{
+				player.sendMessage(Main.getInstance().tag + ChatColor.RED + "Sorry, you did not make it into this game, feel free to spectate or rejoin the hub to join another match.");
+				setSpectating(player);
 			}
 		}
 		preWave();
@@ -369,7 +377,7 @@ public class MortalAPI {
 		
 	}
 
-	@SuppressWarnings("deprecation")
+	@SuppressWarnings({ "deprecation", "static-access" })
 	public void startWave(){
 				
 				setCanBuild(false);
