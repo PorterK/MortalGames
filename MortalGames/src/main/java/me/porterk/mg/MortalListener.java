@@ -236,6 +236,7 @@ public class MortalListener implements Listener{
 	            			p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "You may not attack your team mates. ");
 	            			e.setCancelled(true);
 	            			
+	            	
 	            		}
 	            		
 	            	}

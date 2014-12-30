@@ -63,7 +63,13 @@
   	<name>GLServers Inc.</name>
   	<url>glservers.net</url>
   </organization>
-
+  
+  <repositories>
+    <repository>
+      <id>shadowvolt-repo</id>
+      <url>http://ci.shadowvolt.com/plugin/repository/everything/</url>
+    </repository>
+  </repositories>
 <dependencies>
         <dependency>
             <groupId>org.spigotmc</groupId>
@@ -72,6 +78,12 @@
             <scope>system</scope>
             <systemPath>${project.basedir}/lib/spigot-1.8-R0.1-SNAPSHOT.jar</systemPath>
         </dependency>
+        
+         <dependency>
+    		<groupId>com.comphenix.protocol</groupId>
+    		<artifactId>ProtocolLib</artifactId>
+    		<version>3.6.3-SNAPSHOT</version>
+  		</dependency>
 </dependencies>
 
 </project>

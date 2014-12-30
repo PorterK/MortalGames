@@ -13,10 +13,12 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
+import me.porterk.mg.pfg.WrapperPlayServerWorldEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -33,7 +35,10 @@ import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.scoreboard.Score;
+import org.bukkit.util.Vector;
 import org.bukkit.Location;
+
+import com.google.common.collect.MapMaker;
 
 public class MortalAPI {
 
@@ -56,6 +61,7 @@ public class MortalAPI {
 	HashMap<Player, String> team = new HashMap<Player, String>();
 	ArrayList<String> spectating =  new ArrayList<String>();
 	private FileConfiguration customConfig = null;
+	private Map<Player, Vector> sounds = new MapMaker().weakKeys().makeMap();
 	
 	public void config(){
 
@@ -163,12 +169,60 @@ public class MortalAPI {
 	    return customConfig;
 	}
 	
+	@SuppressWarnings("deprecation")
+	public void playRecord(Player player, Vector loc, Material record) {
+        WrapperPlayServerWorldEvent event = new WrapperPlayServerWorldEvent();
+        event.setData(record != null ? record.getId() : 0);
+        event.setEffectId(WrapperPlayServerWorldEvent.SoundEffects.PLAY_MUSIC_DISK);
+        event.setX(loc.getBlockX());
+        event.setY(loc.getBlockY());
+        event.setZ(loc.getBlockZ());
+        event.sendPacket(player);
+    }
+	
+	@SuppressWarnings("deprecation")
+	public void playWaitMusic(){
+		for(Player p : Bukkit.getServer().getOnlinePlayers()){
+			
+			Vector playing = sounds.get(p);
+			
+			if(playing == null){
+				
+				List<Material> record = new ArrayList<Material>();
+				
+				record.add(Material.RECORD_3);
+				record.add(Material.RECORD_4);
+				record.add(Material.RECORD_5);
+				record.add(Material.RECORD_6);
+				record.add(Material.RECORD_7);
+				record.add(Material.RECORD_8);
+				record.add(Material.RECORD_9);
+				record.add(Material.RECORD_10);
+				record.add(Material.RECORD_11);
+				
+				Collections.shuffle(record);
+				
+				sounds.put(p, playing = p.getLocation().toVector());
+				
+				playRecord(p, playing, record.get(3));
+				
+			}else{
+				sounds.remove(p);
+				playRecord(p, playing, null);
+			}
+			
+		}
+	}
+	
 	public boolean isGameOn(){
 
 		return isGameOn;
 	}
 
 	public void startGame(){
+		
+		playWaitMusic();
+		
 		setCanBuild(true);
 
 		preGameTime = 301;
