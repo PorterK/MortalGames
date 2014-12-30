@@ -233,7 +233,7 @@ public class MortalListener implements Listener{
 	            		
 	            		if(api.getTeam(p) == api.getTeam(a)){
 	            			
-	            			p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "You may not attack your team mates.");
+	            			p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "You may not attack your team mates. ");
 	            			e.setCancelled(true);
 	            			
 	            		}
@@ -253,7 +253,7 @@ public class MortalListener implements Listener{
 				 e.getDrops().clear();
 				
 				 e.getDrops().add(new ItemStack(Material.BREAD, 1));
-				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(0, 5))); //Will eventually be currency
+				 e.getDrops().add(new ItemStack(Material.GOLD_NUGGET, api.random(0, 5))); //Will eventually be currency
 				 
 			 }
 			 
@@ -261,7 +261,7 @@ public class MortalListener implements Listener{
 				 
 				 e.getDrops().clear();
 				 
-				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(3, 6)));
+				 e.getDrops().add(new ItemStack(Material.GOLD_NUGGET, api.random(3, 6)));
 				 
 			 }
 			 
@@ -269,7 +269,7 @@ public class MortalListener implements Listener{
 				 
 				 e.getDrops().clear();
 				 
-				 e.getDrops().add(new ItemStack(Material.GOLD_INGOT, api.random(4, 7)));
+				 e.getDrops().add(new ItemStack(Material.GOLD_NUGGET, api.random(4, 7)));
 				 
 			 }
 			 

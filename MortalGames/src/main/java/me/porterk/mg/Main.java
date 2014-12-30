@@ -274,7 +274,7 @@ public class Main extends JavaPlugin{
 
 	     }
 	  }
-	  ,(1) * 1L);
+	  ,1L);
 	}
 
 public static void createHelix(Player player) {
