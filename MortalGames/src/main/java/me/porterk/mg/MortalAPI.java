@@ -232,7 +232,6 @@ public class MortalAPI {
 								case 0:
 									doNewTrack();
 								}
-
 					}
 					
 				}, 20, 20L);
