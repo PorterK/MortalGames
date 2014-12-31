@@ -187,8 +187,6 @@ public class MortalAPI {
 	public void playWaitMusic(){
 		
 		for(final Player p : Bukkit.getServer().getOnlinePlayers()){
-			
-			p.sendMessage(Main.getInstance().tag + "This works");
 				
 				
 				final List<Material> record = new ArrayList<Material>();
@@ -228,8 +226,6 @@ public class MortalAPI {
 								playRecord(p, p.getLocation().toVector(), record.get(3));
 								
 								duration--;
-								
-								p.sendMessage("" + duration);
 								
 								switch(duration){
 								
