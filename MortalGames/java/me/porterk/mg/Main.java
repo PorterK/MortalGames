@@ -1,4 +1,4 @@
-package src.main.java.me.porterk.mg;
+package me.porterk.mg;
 
 import java.io.IOException;
 import java.sql.Connection;

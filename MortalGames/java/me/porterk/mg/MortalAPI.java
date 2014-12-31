@@ -227,7 +227,10 @@ public class MortalAPI {
 								
 								duration--;
 								
+								p.sendMessage("" + duration);
+								
 								switch(duration){
+								
 								
 								case 0:
 									doNewTrack();
