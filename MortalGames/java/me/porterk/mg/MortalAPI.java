@@ -219,17 +219,16 @@ public class MortalAPI {
 				Collections.shuffle(record);
 				duration = map.get(record.get(3));
 				
+				playRecord(p, p.getLocation().toVector(), record.get(3));
+				
 				musicLoop = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
 					
 					public void run(){
 								
-								playRecord(p, p.getLocation().toVector(), record.get(3));
 								
 								duration--;
 								
 								switch(duration){
-								
-								
 								case 0:
 									doNewTrack();
 								}
