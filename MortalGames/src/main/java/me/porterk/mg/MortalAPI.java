@@ -19,6 +19,7 @@ import java.util.Map;
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
+import me.porterk.mg.packetwrapper.WrapperPlayServerWorldEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -41,6 +42,7 @@ import org.bukkit.Location;
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
 import com.comphenix.protocol.events.PacketContainer;
+import com.comphenix.protocol.wrappers.BlockPosition;
 import com.google.common.collect.MapMaker;
 
 public class MortalAPI {
@@ -173,21 +175,11 @@ public class MortalAPI {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void playRecord(Player p, Material record) {
-		  PacketContainer packet = new PacketContainer(PacketType.Play.Server.WORLD_EVENT);
-		  
-          packet.getIntegers().write(0, 1005);
-          packet.getIntegers().write(1, record.getId());
-          packet.getIntegers().write(2, p.getLocation().getBlockX()); // X
-          packet.getIntegers().write(3,	p.getLocation().getBlockY()); // Y
-          packet.getIntegers().write(4, p.getLocation().getBlockZ()); // Z
-          packet.getBooleans().write(0, false); // Relative
-
-          try {
-              ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
-          } catch (InvocationTargetException e) {
-              e.printStackTrace();
-          }
+    public void playRecord(Player player, Material record) {
+        WrapperPlayServerWorldEvent event = new WrapperPlayServerWorldEvent();
+        event.setData(record != null ? record.getId() : 0);
+        event.setLocation((BlockPosition) player.getWorld().getBlockAt(player.getLocation())); 
+        event.sendPacket(player);
     }
 	
 	@SuppressWarnings("deprecation")
