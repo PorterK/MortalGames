@@ -186,8 +186,6 @@ public class MortalAPI {
 	@SuppressWarnings("deprecation")
 	public void playWaitMusic(){
 		
-		start = (int) (System.currentTimeMillis() / 1000);
-		
 		for(final Player p : Bukkit.getServer().getOnlinePlayers()){
 				
 				
