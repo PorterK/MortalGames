@@ -218,14 +218,12 @@ public class MortalAPI {
 				record.add(Material.GOLD_RECORD);
 				record.add(Material.GREEN_RECORD);
 				
+				Collections.shuffle(record);
+				final int duration = map.get(record.get(3));
 				
 				musicLoop = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
 					
 					public void run(){
-						
-						Collections.shuffle(record);
-						
-						int duration = map.get(record.get(3));
 						
 						int now = (int) (System.currentTimeMillis() / 1000);
 						
