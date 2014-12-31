@@ -448,7 +448,7 @@ public class MortalAPI {
 				
 				setCanBuild(false);
 				
-				for(Player p : Bukkit.getServer().getOnlinePlayers()){
+				/*for(Player p : Bukkit.getServer().getOnlinePlayers()){
 					String team = getTeam(p);
 					
 					int x = (Integer) customConfig.get("team." + team + ".base.x");
@@ -458,7 +458,7 @@ public class MortalAPI {
 					Location base = new Location(p.getWorld(), x, y, z);
 					
 					p.teleport(base);
-				}
+				} Taking out for now to stop NPE*/
 
 				waveCount = 3;
 
