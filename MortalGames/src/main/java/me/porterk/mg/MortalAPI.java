@@ -185,8 +185,11 @@ public class MortalAPI {
 	
 	@SuppressWarnings("deprecation")
 	public void playWaitMusic(){
+		
+		start = (int) (System.currentTimeMillis() / 1000);
+		
 		for(final Player p : Bukkit.getServer().getOnlinePlayers()){
-			
+				
 				
 				final List<Material> record = new ArrayList<Material>();
 				final HashMap<Material, Integer> map = new HashMap<Material, Integer>();
