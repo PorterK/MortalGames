@@ -219,6 +219,8 @@ public class MortalAPI {
 				Collections.shuffle(record);
 				duration = map.get(record.get(3));
 				
+				p.sendMessage(Main.getInstance().tag + "This works");
+				
 				musicLoop = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
 					
 					public void run(){
