@@ -187,6 +187,8 @@ public class MortalAPI {
 	public void playWaitMusic(){
 		
 		for(final Player p : Bukkit.getServer().getOnlinePlayers()){
+			
+			p.sendMessage(Main.getInstance().tag + "This works");
 				
 				
 				final List<Material> record = new ArrayList<Material>();
@@ -218,8 +220,6 @@ public class MortalAPI {
 				
 				Collections.shuffle(record);
 				duration = map.get(record.get(3));
-				
-				p.sendMessage(Main.getInstance().tag + "This works");
 				
 				musicLoop = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
 					
