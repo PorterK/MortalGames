@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
@@ -32,6 +33,7 @@ import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.util.Vector;
 import org.bukkit.Location;
@@ -41,7 +43,7 @@ import com.comphenix.protocol.wrappers.BlockPosition;
 public class MortalAPI {
 
 	public int beforeStart;
-	public int musicLoop;
+	public BukkitTask musicLoop;
 	public int preGameTime;
 	public int wave;
 	public int waveCount;
@@ -54,6 +56,7 @@ public class MortalAPI {
 	protected boolean build;
 	int cash;
 	int teamNumber;
+	int start;
 	Statement s = null;
 	String name;
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
@@ -186,7 +189,7 @@ public class MortalAPI {
 			
 				
 				final List<Material> record = new ArrayList<Material>();
-				HashMap<Material, Integer> map = new HashMap<Material, Integer>();
+				final HashMap<Material, Integer> map = new HashMap<Material, Integer>();
 				
 				map.put(Material.GOLD_RECORD, (2 * 60) + 58);
 				map.put(Material.GREEN_RECORD, (3 * 60) + 5);
@@ -212,18 +215,35 @@ public class MortalAPI {
 				record.add(Material.GOLD_RECORD);
 				record.add(Material.GREEN_RECORD);
 				
+				start = (int) (System.currentTimeMillis() / 1000);
 				
-				musicLoop = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
-				
+				musicLoop = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
+					
 					public void run(){
+						
 						Collections.shuffle(record);
 						
-						playRecord(p, p.getLocation().toVector(), record.get(3));
+						int duration = map.get(record.get(3));
+						
+						int now = (int) (System.currentTimeMillis() / 100);
+						
+							if(now - start > duration ){
+								
+								playRecord(p, p.getLocation().toVector(), record.get(3));
+								
+							}else{			
+								doNewTrack();
+							}
 					}
-				
-				}, 0L, (long) map.get(record.get(3)));
+					
+				}, 40, 40);
 			
 		}
+	}
+	
+	public void doNewTrack(){
+		musicLoop.cancel();
+		playWaitMusic();
 	}
 	
 	public boolean isGameOn(){
