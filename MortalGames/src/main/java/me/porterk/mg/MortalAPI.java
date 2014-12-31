@@ -206,7 +206,7 @@ public class MortalAPI {
 				
 				sounds.put(p, true);
 				
-				playRecord(p, record.get(3));
+				playRecord(p, p.getLocation().toVector(), record.get(3));
 			
 		}
 	}
