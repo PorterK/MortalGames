@@ -225,7 +225,7 @@ public class MortalAPI {
 						
 						int duration = map.get(record.get(3));
 						
-						int now = (int) (System.currentTimeMillis() / 100);
+						int now = (int) (System.currentTimeMillis() / 1000);
 						
 							if(now - start > duration ){
 								
@@ -233,7 +233,6 @@ public class MortalAPI {
 								
 							}else{			
 								doNewTrack();
-								p.sendMessage("failure");
 							}
 					}
 					
