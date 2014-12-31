@@ -41,6 +41,7 @@ import org.bukkit.Location;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.PacketType.Play;
 import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.BlockPosition;
 import com.google.common.collect.MapMaker;
@@ -180,9 +181,10 @@ public class MortalAPI {
 		BlockPosition b = new BlockPosition(loc);
 		
         WrapperPlayServerWorldEvent event = new WrapperPlayServerWorldEvent();
-        event.setData(record != null ? record.getId() : 0);
+        event.setData(record.getId());
         event.setLocation(b); 
         event.sendPacket(player);
+        event.setEffectId(1005);
     }
 	
 	@SuppressWarnings("deprecation")
