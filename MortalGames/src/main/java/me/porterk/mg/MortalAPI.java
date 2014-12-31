@@ -233,6 +233,7 @@ public class MortalAPI {
 								
 							}else{			
 								doNewTrack();
+								p.sendMessage(Main.getInstance().tag + "failure");
 							}
 					}
 					
