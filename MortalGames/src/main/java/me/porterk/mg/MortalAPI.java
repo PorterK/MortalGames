@@ -212,11 +212,12 @@ public class MortalAPI {
 				record.add(Material.GOLD_RECORD);
 				record.add(Material.GREEN_RECORD);
 				
-				Collections.shuffle(record);
 				
 				musicLoop = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 				
 					public void run(){
+						Collections.shuffle(record);
+						
 						playRecord(p, p.getLocation().toVector(), record.get(3));
 					}
 				
