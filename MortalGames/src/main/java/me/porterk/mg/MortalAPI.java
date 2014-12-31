@@ -56,7 +56,7 @@ public class MortalAPI {
 	protected boolean build;
 	int cash;
 	int teamNumber;
-	int start;
+	int start = -1;
 	Statement s = null;
 	String name;
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
@@ -215,7 +215,6 @@ public class MortalAPI {
 				record.add(Material.GOLD_RECORD);
 				record.add(Material.GREEN_RECORD);
 				
-				start = (int) (System.currentTimeMillis() / 1000);
 				
 				musicLoop = Bukkit.getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
 					
@@ -245,6 +244,8 @@ public class MortalAPI {
 	public void doNewTrack(){
 		musicLoop.cancel();
 		playWaitMusic();
+		
+		start = (int) (System.currentTimeMillis() / 1000);
 	}
 	
 	public boolean isGameOn(){
