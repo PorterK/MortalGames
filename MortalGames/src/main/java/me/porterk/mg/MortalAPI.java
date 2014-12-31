@@ -175,10 +175,13 @@ public class MortalAPI {
 	}
 	
 	@SuppressWarnings("deprecation")
-    public void playRecord(Player player, Material record) {
+    public void playRecord(Player player, Vector loc, Material record){
+		
+		BlockPosition b = new BlockPosition(loc);
+		
         WrapperPlayServerWorldEvent event = new WrapperPlayServerWorldEvent();
         event.setData(record != null ? record.getId() : 0);
-        event.setLocation((BlockPosition) player.getWorld().getBlockAt(player.getLocation())); 
+        event.setLocation(b); 
         event.sendPacket(player);
     }
 	
