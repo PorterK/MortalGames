@@ -199,7 +199,8 @@ public class Main extends JavaPlugin{
 						if(args[2].equalsIgnoreCase("game")){
 
 							api.startGame();
-
+							
+							return true;
 						}
 
 						if(args[2].equalsIgnoreCase("waitwave")){
@@ -238,7 +239,7 @@ public class Main extends JavaPlugin{
 								api.preWave();
 							}
 
-
+							return true;
 						}
 
 					}else{

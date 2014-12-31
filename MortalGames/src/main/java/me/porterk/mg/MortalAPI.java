@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -18,7 +19,6 @@ import java.util.Map;
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
-import me.porterk.mg.pfg.WrapperPlayServerWorldEvent;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -38,6 +38,9 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.util.Vector;
 import org.bukkit.Location;
 
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.PacketContainer;
 import com.google.common.collect.MapMaker;
 
 public class MortalAPI {
@@ -61,7 +64,7 @@ public class MortalAPI {
 	HashMap<Player, String> team = new HashMap<Player, String>();
 	ArrayList<String> spectating =  new ArrayList<String>();
 	private FileConfiguration customConfig = null;
-	private Map<Player, Vector> sounds = new MapMaker().weakKeys().makeMap();
+	private Map<Player, Boolean> sounds = new MapMaker().weakKeys().makeMap();
 	
 	public void config(){
 
@@ -170,23 +173,30 @@ public class MortalAPI {
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void playRecord(Player player, Vector loc, Material record) {
-        WrapperPlayServerWorldEvent event = new WrapperPlayServerWorldEvent();
-        event.setData(record != null ? record.getId() : 0);
-        event.setEffectId(WrapperPlayServerWorldEvent.SoundEffects.PLAY_MUSIC_DISK);
-        event.setX(loc.getBlockX());
-        event.setY(loc.getBlockY());
-        event.setZ(loc.getBlockZ());
-        event.sendPacket(player);
+	public void playRecord(Player p, Material record) {
+		  PacketContainer packet = new PacketContainer(PacketType.Play.Server.WORLD_EVENT);
+		  
+          packet.getIntegers().write(0, 1005);
+          packet.getIntegers().write(1, record.getId());
+          packet.getIntegers().write(2, p.getLocation().getBlockX()); // X
+          packet.getIntegers().write(3,	p.getLocation().getBlockY()); // Y
+          packet.getIntegers().write(4, p.getLocation().getBlockZ()); // Z
+          packet.getBooleans().write(0, false); // Relative
+
+          try {
+              ProtocolLibrary.getProtocolManager().sendServerPacket(p, packet);
+          } catch (InvocationTargetException e) {
+              e.printStackTrace();
+          }
     }
 	
 	@SuppressWarnings("deprecation")
 	public void playWaitMusic(){
 		for(Player p : Bukkit.getServer().getOnlinePlayers()){
 			
-			Vector playing = sounds.get(p);
+			boolean playing = sounds.get(p);
 			
-			if(playing == null){
+			if(!playing || sounds.get(p) == null){
 				
 				List<Material> record = new ArrayList<Material>();
 				
@@ -202,13 +212,13 @@ public class MortalAPI {
 				
 				Collections.shuffle(record);
 				
-				sounds.put(p, playing = p.getLocation().toVector());
+				sounds.put(p, true);
 				
-				playRecord(p, playing, record.get(3));
+				playRecord(p, record.get(3));
 				
 			}else{
 				sounds.remove(p);
-				playRecord(p, playing, null);
+				playRecord(p, null);
 			}
 			
 		}
