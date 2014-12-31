@@ -194,9 +194,6 @@ public class MortalAPI {
 	public void playWaitMusic(){
 		for(Player p : Bukkit.getServer().getOnlinePlayers()){
 			
-			boolean playing = sounds.get(p);
-			
-			if(!playing || sounds.get(p) == null){
 				
 				List<Material> record = new ArrayList<Material>();
 				
@@ -215,11 +212,6 @@ public class MortalAPI {
 				sounds.put(p, true);
 				
 				playRecord(p, record.get(3));
-				
-			}else{
-				sounds.remove(p);
-				playRecord(p, null);
-			}
 			
 		}
 	}
