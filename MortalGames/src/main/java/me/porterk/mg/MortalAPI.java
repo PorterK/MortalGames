@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.lang.reflect.InvocationTargetException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,8 +13,6 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
@@ -39,16 +36,12 @@ import org.bukkit.scoreboard.Score;
 import org.bukkit.util.Vector;
 import org.bukkit.Location;
 
-import com.comphenix.protocol.PacketType;
-import com.comphenix.protocol.ProtocolLibrary;
-import com.comphenix.protocol.PacketType.Play;
-import com.comphenix.protocol.events.PacketContainer;
 import com.comphenix.protocol.wrappers.BlockPosition;
-import com.google.common.collect.MapMaker;
 
 public class MortalAPI {
 
 	public int beforeStart;
+	public int musicLoop;
 	public int preGameTime;
 	public int wave;
 	public int waveCount;
@@ -67,7 +60,7 @@ public class MortalAPI {
 	HashMap<Player, String> team = new HashMap<Player, String>();
 	ArrayList<String> spectating =  new ArrayList<String>();
 	private FileConfiguration customConfig = null;
-	private Map<Player, Boolean> sounds = new MapMaker().weakKeys().makeMap();
+
 	
 	public void config(){
 
@@ -189,10 +182,24 @@ public class MortalAPI {
 	
 	@SuppressWarnings("deprecation")
 	public void playWaitMusic(){
-		for(Player p : Bukkit.getServer().getOnlinePlayers()){
+		for(final Player p : Bukkit.getServer().getOnlinePlayers()){
 			
 				
-				List<Material> record = new ArrayList<Material>();
+				final List<Material> record = new ArrayList<Material>();
+				HashMap<Material, Integer> map = new HashMap<Material, Integer>();
+				
+				map.put(Material.GOLD_RECORD, (2 * 60) + 58);
+				map.put(Material.GREEN_RECORD, (3 * 60) + 5);
+				map.put(Material.RECORD_3, (5 * 60) + 45);
+				map.put(Material.RECORD_4, (3 * 60) + 5);
+				map.put(Material.RECORD_5, (2 * 60) + 54);
+				map.put(Material.RECORD_6, (3 * 60) + 17);
+				map.put(Material.RECORD_7, (1 * 60) + 36);
+				map.put(Material.RECORD_8, (2 * 60) + 30);
+				map.put(Material.RECORD_9, (3 * 60) + 8);
+				map.put(Material.RECORD_10, (4 * 60) + 11);
+				map.put(Material.RECORD_12, (3 * 60) + 55);
+				
 				
 				record.add(Material.RECORD_3);
 				record.add(Material.RECORD_4);
@@ -202,13 +209,18 @@ public class MortalAPI {
 				record.add(Material.RECORD_8);
 				record.add(Material.RECORD_9);
 				record.add(Material.RECORD_10);
-				record.add(Material.RECORD_11);
+				record.add(Material.GOLD_RECORD);
+				record.add(Material.GREEN_RECORD);
 				
 				Collections.shuffle(record);
 				
-				sounds.put(p, true);
+				musicLoop = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable() {
 				
-				playRecord(p, p.getLocation().toVector(), record.get(3));
+					public void run(){
+						playRecord(p, p.getLocation().toVector(), record.get(3));
+					}
+				
+				}, 0L, (long) map.get(record.get(3)));
 			
 		}
 	}
