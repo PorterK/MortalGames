@@ -135,7 +135,7 @@ public class Main extends JavaPlugin{
 			e.printStackTrace();
 		}
 		
-		 ProtocolLibrary.getProtocolManager().addPacketListener(
+		 /* ProtocolLibrary.getProtocolManager().addPacketListener(
 			      new PacketAdapter(this, ListenerPriority.NORMAL,
 			      Arrays.asList(PacketType.Status.Server.OUT_SERVER_INFO), ListenerOptions.ASYNC) {
 			 
@@ -143,7 +143,17 @@ public class Main extends JavaPlugin{
 			        public void onPacketSending(PacketEvent event) {
 			            handlePing(event.getPacket().getServerPings().read(0));
 			        }
-			    });
+			    }); */ 
+		//Everything will work in the next released version of ProtocolLib
+	}
+	
+	@SuppressWarnings("deprecation")
+	private void handlePing(WrappedServerPing ping) {
+	    ping.setPlayers(Arrays.asList(
+	        new WrappedGameProfile("id1", ChatColor.DARK_RED + "The Mortal Games"),
+	        new WrappedGameProfile("id2", ChatColor.YELLOW + "v. B.0.1"),
+	        new WrappedGameProfile("id3", ChatColor.GOLD + "GLServers, Inc")
+	    ));
 	}
 	
 	@Override
@@ -168,14 +178,7 @@ public class Main extends JavaPlugin{
 		return plugin;
 	}
 	
-	@SuppressWarnings("deprecation")
-	private void handlePing(WrappedServerPing ping) {
-	    ping.setPlayers(Arrays.asList(
-	        new WrappedGameProfile("id1", ChatColor.DARK_RED + "The Mortal Games"),
-	        new WrappedGameProfile("id2", ChatColor.YELLOW + "v. B.0.1"),
-	        new WrappedGameProfile("id3", ChatColor.GOLD + "GLServers, Inc")
-	    ));
-	}
+
 	
 	public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
 
