@@ -54,7 +54,7 @@
             </resource>
             <!--Include source in the main jar-->
             <resource>
-                <directory>src/me</directory>
+                <directory>src</directory>
             </resource>
         </resources>
   </build> 
