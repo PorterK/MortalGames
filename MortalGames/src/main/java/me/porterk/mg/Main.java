@@ -66,7 +66,7 @@ public class Main extends JavaPlugin{
 		s = Bukkit.getServer().getScoreboardManager().getNewScoreboard();
 		obj = s.registerNewObjective("game", "dummy");
 		obj.setDisplaySlot(DisplaySlot.SIDEBAR);
-		obj.setDisplayName(ChatColor.DARK_RED + "The Mortal Games | TEST");
+		obj.setDisplayName(ChatColor.DARK_RED + "The Mortal Games WAT");
 		
 		Score time = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Time: "));
 		time.setScore(0);
