@@ -135,7 +135,7 @@ public class Main extends JavaPlugin{
 			e.printStackTrace();
 		}
 		
-		 /* ProtocolLibrary.getProtocolManager().addPacketListener(
+		 ProtocolLibrary.getProtocolManager().addPacketListener(
 			      new PacketAdapter(this, ListenerPriority.NORMAL,
 			      Arrays.asList(PacketType.Status.Server.OUT_SERVER_INFO), ListenerOptions.ASYNC) {
 			 
@@ -143,8 +143,7 @@ public class Main extends JavaPlugin{
 			        public void onPacketSending(PacketEvent event) {
 			            handlePing(event.getPacket().getServerPings().read(0));
 			        }
-			    }); */ 
-		//Everything will work in the next released version of ProtocolLib
+			    }); 
 	}
 	
 	@SuppressWarnings("deprecation")

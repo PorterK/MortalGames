@@ -1,6 +1,7 @@
 name: MortalGames
 main: me.porterk.mg.Main
 version: 1.0
+depend: [ProtocolLib]
 commands:
       mg:
          description: Mortal Games
