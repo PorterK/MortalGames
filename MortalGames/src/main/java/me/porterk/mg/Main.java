@@ -3,6 +3,7 @@ package me.porterk.mg;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.Statement;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.logging.Level;
 
@@ -23,6 +24,15 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
+
+import com.comphenix.protocol.PacketType;
+import com.comphenix.protocol.ProtocolLibrary;
+import com.comphenix.protocol.events.ListenerOptions;
+import com.comphenix.protocol.events.ListenerPriority;
+import com.comphenix.protocol.events.PacketAdapter;
+import com.comphenix.protocol.events.PacketEvent;
+import com.comphenix.protocol.wrappers.WrappedGameProfile;
+import com.comphenix.protocol.wrappers.WrappedServerPing;
 
 public class Main extends JavaPlugin{
 	public boolean SQL;
@@ -124,6 +134,16 @@ public class Main extends JavaPlugin{
 			api.debugLog(e.toString());
 			e.printStackTrace();
 		}
+		
+		 ProtocolLibrary.getProtocolManager().addPacketListener(
+			      new PacketAdapter(this, ListenerPriority.NORMAL,
+			      Arrays.asList(PacketType.Status.Server.OUT_SERVER_INFO), ListenerOptions.ASYNC) {
+			 
+			        @Override
+			        public void onPacketSending(PacketEvent event) {
+			            handlePing(event.getPacket().getServerPings().read(0));
+			        }
+			    });
 	}
 	
 	@Override
@@ -147,6 +167,16 @@ public class Main extends JavaPlugin{
 		
 		return plugin;
 	}
+	
+	@SuppressWarnings("deprecation")
+	private void handlePing(WrappedServerPing ping) {
+	    ping.setPlayers(Arrays.asList(
+	        new WrappedGameProfile("id1", ChatColor.DARK_RED + "The Mortal Games"),
+	        new WrappedGameProfile("id2", ChatColor.YELLOW + "v. B.0.1"),
+	        new WrappedGameProfile("id3", ChatColor.GOLD + "GLServers, Inc")
+	    ));
+	}
+	
 	public boolean onCommand(CommandSender s, Command cmd, String label, String[] args) {
 
 		Player p = (Player) s;
