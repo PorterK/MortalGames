@@ -1,0 +1,6 @@
+name: MortalGames
+main: me.porterk.mg.Main
+version: 1.0
+commands:
+      mg:
+         description: Mortal Games
