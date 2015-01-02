@@ -48,14 +48,14 @@
         </plugins> 
         <resources>
             <resource>
-                <directory>resources</directory>
+                <directory>src/main/resources</directory>
                 <!--Replace variables-->
                 <filtering>true</filtering>
             </resource>
-            <!--Include source in the main jar-->
+            <!--Include source in the main jar
             <resource>
-                <directory>src</directory>
-            </resource>
+                <directory>src/main/java</directory>
+            </resource>-->
         </resources>
   </build> 
   
