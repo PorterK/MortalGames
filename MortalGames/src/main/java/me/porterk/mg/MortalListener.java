@@ -203,6 +203,7 @@ public class MortalListener implements Listener{
 			String d4 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " was terminated.";
 			String d5 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " met their maker";
 			String d6 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " dropped their sword.";
+			String d7 = Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " had a heart attack, but 911 hung up.";
 			
 			deathMessage.add(d1);
 			deathMessage.add(d2);
@@ -210,6 +211,7 @@ public class MortalListener implements Listener{
 			deathMessage.add(d4);
 			deathMessage.add(d5);
 			deathMessage.add(d6);
+			deathMessage.add(d7);
 			
 			Collections.shuffle(deathMessage);
 			
