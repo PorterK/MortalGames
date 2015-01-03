@@ -655,7 +655,7 @@ public class MortalAPI {
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
 			
 		try{		
-				Main.getInstance().cs.executeQuery("CREATE TABLE IF NOT EXISTS cash (PlayerName TEXT(100), Balance int);");
+				Main.getInstance().cs.executeUpdate("CREATE TABLE IF NOT EXISTS cash (PlayerName TEXT(100), Balance int);");
 				
 				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
 		}catch(Exception e){
