@@ -655,7 +655,7 @@ public class MortalAPI {
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
 			
 		try{		
-				Main.getInstance().cs.executeUpdate("CREATE TABLE IF NOT EXISTS cash (PlayerName TEXT(100), Balance int);");
+				Main.getInstance().cs.executeUpdate("CREATE TABLE IF NOT EXISTS mg_cash (PlayerName TEXT(20), Balance int);");
 				
 				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
 		}catch(Exception e){
@@ -665,11 +665,10 @@ public class MortalAPI {
 		
 			
 			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE PlayerName = '" + name + "';");
-			res.next();
 
-			if(res.getString("PlayerName") == null){
+			if(!res.next()){
 
-				Main.getInstance().cs.executeUpdate("INSERT INTO cash (`PlayerName`, `Balance`, `totalCash`) VALUES ('" + p.getName() + "', '500');");
+				Main.getInstance().cs.executeUpdate("INSERT INTO cash (`PlayerName`, `Balance`) VALUES ('" + p.getName() + "', '500');");
 				
 				cash = 500;
 
