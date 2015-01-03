@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.logging.Level;
 
 import me.porterk.mg.mobs.MortalBat;
 import me.porterk.mg.mobs.MortalSkeleton;
@@ -652,6 +653,17 @@ public class MortalAPI {
 			name = p.getName();
 
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+		try{		
+				Main.getInstance().cs.executeQuery("CREATE TABLE IF NOT EXISTS cash (PlayerName TEXT(100), Balance int);");
+				
+				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
+		}catch(Exception e){
+			
+			e.printStackTrace();
+		}
+		
+			
 			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE PlayerName = '" + name + "';");
 			res.next();
 

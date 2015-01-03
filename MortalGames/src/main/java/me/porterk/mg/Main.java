@@ -111,18 +111,7 @@ public class Main extends JavaPlugin{
 				config.getString("MySQL.port"), config.getString("MySQL.database"), 
 				config.getString("MySQL.username"), config.getString("MySQL.password"));
 		c = ms.openConnection();
-		
-		try{
-			
-				
-				cs.executeQuery("CREATE TABLE IF NOT EXISTS cash (PlayerName TEXT(100), Balance int);");
-				
-				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
-		}catch(Exception e){
-			
-			e.printStackTrace();
-		}
-		
+
 		try {
 			config.save(api.configFile());
 		} catch (IOException e) {
