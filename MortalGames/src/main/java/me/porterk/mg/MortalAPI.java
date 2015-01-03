@@ -652,22 +652,18 @@ public class MortalAPI {
 			name = p.getName();
 
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
-			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mortal WHERE PlayerName = '" + name + "';");
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE PlayerName = '" + name + "';");
 
-			if(!res.next()){
-				Main.getInstance().cs.executeUpdate("INSERT INTO mortal (`PlayerName`, `inGameCash`, `totalCash`, " +
-						"`totalKills`, `serverCash`, `rank`) VALUES ('" + p.getName() + "', '500', '500', '0', '0', 'Default');");
-			}else{
-				res.next();
-			}
 
 			if(res.getString("PlayerName") == null){
 
-				cash = 1;
+				Main.getInstance().cs.executeUpdate("INSERT INTO cash (`PlayerName`, `Balance`, `totalCash`) VALUES ('" + p.getName() + "', '500');");
+				
+				cash = 500;
 
 			}else {
 
-				cash = res.getInt("inGameCash");
+				cash = res.getInt("Balance");
 			}
 		} catch (SQLException e) {
 
