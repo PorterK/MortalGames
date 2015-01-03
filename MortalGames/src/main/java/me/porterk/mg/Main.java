@@ -152,6 +152,8 @@ public class Main extends JavaPlugin{
 	        new WrappedGameProfile("id1", ChatColor.DARK_RED + "The Mortal Games"),
 	        new WrappedGameProfile("id2", ChatColor.YELLOW + "v. B.0.1"),
 	        new WrappedGameProfile("id3", ChatColor.GOLD + "GLServers, Inc")
+	        
+	        
 	    ));
 	}
 	
@@ -234,6 +236,8 @@ public class Main extends JavaPlugin{
 							
 							return true;
 						}
+						
+						
 
 						if(args[2].equalsIgnoreCase("waitwave")){
 
@@ -274,7 +278,15 @@ public class Main extends JavaPlugin{
 							return true;
 						}
 
-					}else{
+					}
+					
+					if(args[1].equals("shop")){
+						
+						api.openShop(p);
+						
+					}
+					
+					else{
 						p.sendMessage(tag + ChatColor.GOLD + "Not enough arguments.");
 					}
 

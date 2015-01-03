@@ -34,7 +34,9 @@ import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.inventory.EntityEquipment;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.util.Vector;
@@ -749,6 +751,41 @@ public class MortalAPI {
 	public Boolean canBuild(){
 		
 		return build;
+	}
+	
+	public void addItem(Material m, Inventory i, String name, String lore, Integer price){
+		
+		ItemStack a = new ItemStack(m, 1);
+		
+		ItemMeta b = a.getItemMeta();
+		
+		List<String> c = new ArrayList<String>();
+		
+		c.add(lore);
+		c.add(ChatColor.AQUA + "" + price + " coins");
+		
+		b.setDisplayName(name);
+		
+		b.setLore(c);
+		
+		a.setItemMeta(b);
+		
+		i.addItem(a);
+		
+		
+		
+	}
+	
+	public void openShop(Player p){
+		
+		Inventory shop = Main.getInstance().getServer().createInventory(null, 54, ChatColor.DARK_RED + "Mortal Shop");
+		
+		addItem(Material.GLASS, shop, "Glass", "Durability: 2", 500);
+		addItem(Material.DIRT, shop, "Dirt", "Durability: 3", 650);
+		addItem(Material.LOG, shop, "Log", "Durability: 5", 1000);
+		
+		p.openInventory(shop);
+		
 	}
 
 }
