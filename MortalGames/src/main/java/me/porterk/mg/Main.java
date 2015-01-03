@@ -112,6 +112,19 @@ public class Main extends JavaPlugin{
 				config.getString("MySQL.username"), config.getString("MySQL.password"));
 		c = ms.openConnection();
 		
+		try{
+			
+			if(cs.executeQuery("SELECT PlayerName * FROM cash").getFetchSize() == 0){
+				
+				cs.executeQuery("CREATE TABLE cash (PlayerName String, Balance int);");
+				
+				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
+				
+			}
+		}catch(Exception e){
+			
+		}
+		
 		try {
 			config.save(api.configFile());
 		} catch (IOException e) {
@@ -303,7 +316,7 @@ public class Main extends JavaPlugin{
 			
 			if(args[0].equals("money")){
 				
-				p.sendMessage(ChatColor.GOLD + "Your balance is " + ChatColor.RED + "" + api.getCash(p));
+				p.sendMessage(tag + ChatColor.GOLD + "Your balance is " + ChatColor.RED + "" + api.getCash(p));
 			}
 
 		}
