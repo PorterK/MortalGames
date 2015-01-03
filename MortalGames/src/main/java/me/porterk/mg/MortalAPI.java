@@ -14,10 +14,12 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
+import me.porterk.mg.mobs.MortalBat;
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
 import me.porterk.mg.packetwrapper.WrapperPlayServerWorldEvent;
+import net.minecraft.server.v1_8_R1.EntityLiving;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -560,6 +562,30 @@ public class MortalAPI {
 									}
 									
 								
+								}
+								
+								if(waveNumber >= 4){
+									int bat;
+									
+									bat = random(1, 3);
+									
+									while (bat > 0){
+										
+										Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
+
+										mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
+
+										net.minecraft.server.v1_8_R1.World world = ((CraftWorld) tar.getWorld()).getHandle();
+										
+										MortalBat b = new MortalBat(world);
+										
+										b.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
+										
+										world.addEntity(b, SpawnReason.CUSTOM);
+										
+										b.setGoalTarget((EntityLiving) tar);
+										
+									}
 								}
 								
 								if(waveNumber >= 5){

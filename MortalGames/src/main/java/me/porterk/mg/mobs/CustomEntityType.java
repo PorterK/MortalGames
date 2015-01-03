@@ -7,6 +7,7 @@ import java.util.Map;
 
 import net.minecraft.server.v1_8_R1.BiomeBase;
 import net.minecraft.server.v1_8_R1.BiomeMeta;
+import net.minecraft.server.v1_8_R1.EntityBat;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntitySkeleton;
 import net.minecraft.server.v1_8_R1.EntitySpider;
@@ -19,7 +20,8 @@ public enum CustomEntityType {
 
 	ZOMBIE("Zombie", 54, EntityType.ZOMBIE, EntityZombie.class, MortalZombie.class),
 	SKELETON("Skeleton", 51, EntityType.SKELETON, EntitySkeleton.class, MortalSkeleton.class),
-	SPIDER("Spider", 52, EntityType.SPIDER, EntitySpider.class, MortalSpider.class);
+	SPIDER("Spider", 52, EntityType.SPIDER, EntitySpider.class, MortalSpider.class),
+	BAT("Bat", 65, EntityType.BAT, EntityBat.class, MortalBat.class);
 
 	private String name;
 	private int id;
