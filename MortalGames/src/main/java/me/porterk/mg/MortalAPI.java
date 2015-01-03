@@ -653,7 +653,7 @@ public class MortalAPI {
 
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
 			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE PlayerName = '" + name + "';");
-
+			res.next();
 
 			if(res.getString("PlayerName") == null){
 
