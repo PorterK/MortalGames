@@ -114,13 +114,10 @@ public class Main extends JavaPlugin{
 		
 		try{
 			
-			if(cs.executeQuery("SELECT PlayerName * FROM cash").getFetchSize() == 0){
 				
-				cs.executeQuery("CREATE TABLE cash (PlayerName String, Balance int);");
+				cs.executeQuery("CREATE TABLE IF NOT EXISTS cash (PlayerName TEXT(100), Balance int);");
 				
 				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
-				
-			}
 		}catch(Exception e){
 			
 		}
