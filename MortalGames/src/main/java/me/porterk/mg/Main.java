@@ -293,11 +293,17 @@ public class Main extends JavaPlugin{
 				}
 				return true;
 			}
+			
 
 			if(args[0].equals(null)){
 
 				s.sendMessage(tag + ChatColor.GOLD + "Do me a favor, learn the commands " + ChatColor.DARK_RED + "[INVALID ARGUMENTS]");
 
+			}
+			
+			if(args[0].equals("money")){
+				
+				p.sendMessage(ChatColor.GOLD + "Your balance is " + ChatColor.RED + "" + api.getCash(p));
 			}
 
 		}
