@@ -120,6 +120,7 @@ public class Main extends JavaPlugin{
 				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
 		}catch(Exception e){
 			
+			e.printStackTrace();
 		}
 		
 		try {
