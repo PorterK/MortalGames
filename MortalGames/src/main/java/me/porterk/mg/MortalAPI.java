@@ -7,6 +7,7 @@ import java.io.PrintWriter;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -668,6 +669,74 @@ public class MortalAPI {
 		}
 
 		return cash;
+	}
+	
+	public int getKills(Player p){
+		
+		int kills = 0;
+		
+		try{
+			
+			uuid = p.getUniqueId().toString();
+			
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
+			res.next();
+			
+			kills = res.getInt("Kills");
+		}catch(SQLException e){
+			
+			e.printStackTrace();
+		}
+		
+		return kills;
+	}
+	
+	public int getDeaths(Player p){
+		
+		int deaths = 0;
+		
+		try{
+			
+			uuid = p.getUniqueId().toString();
+			
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
+			res.next();
+			
+			deaths = res.getInt("Deaths");
+		}catch(SQLException e){
+			
+			e.printStackTrace();
+		}
+		
+		return deaths;
+	}
+	
+	public String getKDR(Player p){
+		
+		float kd = 0;
+		DecimalFormat df = new DecimalFormat();
+		df.setMaximumFractionDigits(2);
+		
+		try{
+			
+			uuid = p.getUniqueId().toString();
+			
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
+			res.next();
+			
+			kd = (res.getInt("Kills") / res.getInt("Deaths"));
+		}catch(SQLException e){
+			
+			e.printStackTrace();
+		}
+		
+		return df.format(kd);
 	}
 	
 	public void registerSQLTable(){
