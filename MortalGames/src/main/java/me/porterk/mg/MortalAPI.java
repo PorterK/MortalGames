@@ -696,7 +696,7 @@ public class MortalAPI {
 				p.sendMessage(Main.getInstance().tag + "Welcome to the " + ChatColor.DARK_RED + "Mortal Games" + ChatColor.RESET + "! Your stats are now being recorded!");
 				
 				Main.getInstance().cs.executeUpdate("INSERT INTO mg (`UUID`, `PlayerName`, `Money`.`Kills`, `Deaths`, `GamesPlayed`, `Rank`) VALUES "
-						+ "('" + p.getUniqueId().toString() + "', '" + p.getName() + "', '500', '0', '0', '0', 'default')");
+						+ "('" + p.getUniqueId().toString() + "', '" + p.getName() + "', '500', '0', '0', '0', 'default');");
 			}
 			
 		} catch (SQLException e) {
