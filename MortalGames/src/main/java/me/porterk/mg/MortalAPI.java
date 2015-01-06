@@ -659,7 +659,7 @@ public class MortalAPI {
 			
 			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE UUID = '" + uuid + "';");
 			
-				cash = res.getInt("Cash");
+				cash = res.getInt("Money");
 				
 		} catch (SQLException e) {
 
