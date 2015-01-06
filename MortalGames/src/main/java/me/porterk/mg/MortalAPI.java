@@ -657,7 +657,7 @@ public class MortalAPI {
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
 			
 			
-			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE UUID = '" + uuid + "';");
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
 			
 				cash = res.getInt("Money");
 				
