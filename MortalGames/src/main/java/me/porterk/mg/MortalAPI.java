@@ -701,8 +701,8 @@ public class MortalAPI {
 			
 		} catch (SQLException e) {
 			debugLog(e.toString());
-			
-			Main.getInstance().getLogger().log(Level.SEVERE, e.getCause().toString());
+
+			e.printStackTrace();
 		}
 		
 	}
