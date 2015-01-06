@@ -10,6 +10,7 @@ import org.bukkit.block.Block;
 import org.bukkit.craftbukkit.v1_8_R1.CraftSound;
 import org.bukkit.craftbukkit.v1_8_R1.block.CraftBlock;
 
+import me.porterk.mg.mobs.MortalZombie;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityPlayer;
 import net.minecraft.server.v1_8_R1.MathHelper;
@@ -88,7 +89,7 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 							e.printStackTrace();
 						}
 
-						a.world.broadcastEntityEffect(a, (byte) 54);
+						a.world.broadcastEntityEffect(a, (byte) 16);
 					}
 
 				}
@@ -116,7 +117,7 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 							e.printStackTrace();
 						}
 
-						a.world.broadcastEntityEffect(a, (byte) 54);
+						a.world.broadcastEntityEffect(a, (byte) 16);
 					}
 
 				}
@@ -143,7 +144,7 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 							e.printStackTrace();
 						}
 
-						a.world.broadcastEntityEffect(a, (byte) 54);
+						a.world.broadcastEntityEffect(a, (byte) 16);
 					}
 
 				}
@@ -169,7 +170,7 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 							e.printStackTrace();
 						}
 
-						a.world.broadcastEntityEffect(a, (byte) 54);
+						MortalZombie.breakAnim(a);
 					}
 
 				}

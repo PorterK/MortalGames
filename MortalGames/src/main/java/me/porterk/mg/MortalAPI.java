@@ -13,6 +13,7 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+import java.util.UUID;
 import java.util.logging.Level;
 
 import me.porterk.mg.mobs.MortalBat;
@@ -31,6 +32,8 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Creature;
+import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -63,7 +66,7 @@ public class MortalAPI {
 	int teamNumber;
 	int duration;
 	Statement s = null;
-	String name;
+	String uuid;
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
 	HashMap<Player, String> team = new HashMap<Player, String>();
 	ArrayList<String> spectating =  new ArrayList<String>();
@@ -163,8 +166,8 @@ public class MortalAPI {
 			customConfig.addDefault("team.green.trader.z", "0");
 			customConfig.addDefault("drop_rate", "100"); //drop rates in percent
 			customConfig.options().copyDefaults(true);
-			
 			getCustomConfig().save(yml);
+			
 		}catch(IOException e){
 			e.printStackTrace();
 		}
@@ -359,8 +362,7 @@ public class MortalAPI {
 					(teamNumber == 2) ||
 					(teamNumber == 4) ||
 					(teamNumber == 6) ||
-					(teamNumber == 8) ||
-					(teamNumber == 10)){
+					(teamNumber == 8)){
 				team.put(player, "green");
 				Main.getInstance().chat.put(player.getName(), "green");
 				player.sendMessage("You're on the " + ChatColor.GREEN + "green " + ChatColor.WHITE + "team");
@@ -586,7 +588,7 @@ public class MortalAPI {
 										
 										world.addEntity(b, SpawnReason.CUSTOM);
 										
-										b.setGoalTarget((EntityLiving) tar);
+										((Creature) (LivingEntity) b).setTarget(tar);
 										
 									}
 								}
@@ -650,38 +652,59 @@ public class MortalAPI {
 
 		try{
 
-			name = p.getName();
+			uuid = p.getUniqueId().toString();
 
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
 			
-		try{		
-				Main.getInstance().cs.executeUpdate("CREATE TABLE IF NOT EXISTS mg_cash (PlayerName TEXT(20), Balance int);");
-				
-				Bukkit.getServer().getLogger().log(Level.INFO, "Table 'cash' created");
-		}catch(Exception e){
 			
-			e.printStackTrace();
-		}
-		
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE UUID = '" + uuid + "';");
 			
-			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM cash WHERE PlayerName = '" + name + "';");
-
-			if(!res.next()){
-
-				Main.getInstance().cs.executeUpdate("INSERT INTO cash (`PlayerName`, `Balance`) VALUES ('" + p.getName() + "', '500');");
+				cash = res.getInt("Cash");
 				
-				cash = 500;
-
-			}else {
-
-				cash = res.getInt("Balance");
-			}
 		} catch (SQLException e) {
 
 			e.printStackTrace();
 		}
 
 		return cash;
+	}
+	
+	public void registerSQLTable(){
+		
+		try{
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			Main.getInstance().cs.executeUpdate("CREATE TABLE IF NOT EXISTS mg (UUID TEXT(50), PlayerName TEXT(20), Money int, Kills int, Deaths int, GamesPlayed int, Rank TEXT(20));");
+			
+			Main.getInstance().getLogger().log(Level.INFO, "MySQL table 'mg' was either found or created-- ready to rock!");
+		}catch(SQLException e){
+			Main.getInstance().getLogger().log(Level.SEVERE, "MySQL table could not be created");
+			
+			e.printStackTrace();
+		}
+	}
+	
+	public void registerPlayer(Player p){
+		
+		try {
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + p.getUniqueId().toString() + "';");
+			
+			if(!res.next()){
+				
+				p.sendMessage(Main.getInstance().tag + "Welcome to the " + ChatColor.DARK_RED + "Mortal Games" + ChatColor.RESET + "! Your stats are now being recorded!");
+				
+				Main.getInstance().cs.executeUpdate("INSERT INTO mg (`UUID`, `PlayerName`, `Money`.`Kills`, `Deaths`, `GamesPlayed`, `Rank`) VALUES "
+						+ "('" + p.getUniqueId().toString() + "', '" + p.getName() + "', '500', '0', '0', '0', 'default')");
+			}
+			
+		} catch (SQLException e) {
+			debugLog(e.toString());
+			
+			Main.getInstance().getLogger().log(Level.SEVERE, ChatColor.DARK_RED + "Error with MySQL, check debug log!");
+		}
+		
 	}
 
 	public int random(int min, int max){

@@ -47,6 +47,9 @@ public class MortalListener implements Listener{
 		e.setJoinMessage(null);
 
 		Player p = e.getPlayer();
+		
+		api.registerPlayer(p);
+		
 		int playerCount = p.getServer().getOnlinePlayers().length;
 		
 		Main.getInstance().chat.put(p.getName(), "general");
@@ -88,6 +91,7 @@ public class MortalListener implements Listener{
 
 		if(p.isOp()){
 			p.sendMessage(ChatColor.AQUA + "Type" + ChatColor.DARK_RED + " /mg admin" + ChatColor.AQUA + " to get to admin chat!");
+		
 		}
 
 		if(playerCount == 10){
@@ -327,7 +331,10 @@ public class MortalListener implements Listener{
 		 
 		 Player p = e.getPlayer();
 		 
+		 if(api.team.containsKey(p)){
+			
 		 team.add(api.team.get(p));
+		 }
 		 
 		 e.setQuitMessage(null); 
 	 }

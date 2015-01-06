@@ -9,6 +9,7 @@ import net.minecraft.server.v1_8_R1.*;
 
 
 public class MortalZombie extends EntityZombie{
+	
 
 	public MortalZombie(World world) {
 		super(world);
@@ -38,6 +39,12 @@ public class MortalZombie extends EntityZombie{
 		this.goalSelector.a(8, new PathfinderGoalRandomLookaround(this));
 		this.targetSelector.a(1, new PathfinderGoalHurtByTarget(this, true));
 		this.targetSelector.a(2, new PathfinderGoalNearestAttackableTarget(this, EntityHuman.class, 0, true, canPickUpLoot, null));
+	}
+	
+	public static void breakAnim(Entity e){
+		
+		e.getWorld().broadcastEntityEffect(e, (byte) 16);
+		
 	}
 
 	protected void aD() {

@@ -135,6 +135,8 @@ public class Main extends JavaPlugin{
 			e.printStackTrace();
 		}
 		
+		api.registerSQLTable();
+		
 		 ProtocolLibrary.getProtocolManager().addPacketListener(
 			      new PacketAdapter(this, ListenerPriority.NORMAL,
 			      Arrays.asList(PacketType.Status.Server.OUT_SERVER_INFO), ListenerOptions.ASYNC) {
