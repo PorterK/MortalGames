@@ -702,7 +702,7 @@ public class MortalAPI {
 		} catch (SQLException e) {
 			debugLog(e.toString());
 			
-			Main.getInstance().getLogger().log(Level.SEVERE, ChatColor.DARK_RED + "Error with MySQL, check debug log!");
+			Main.getInstance().getLogger().log(Level.SEVERE, e.getCause().toString());
 		}
 		
 	}
