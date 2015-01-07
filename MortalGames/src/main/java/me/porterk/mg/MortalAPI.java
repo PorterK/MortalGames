@@ -730,7 +730,17 @@ public class MortalAPI {
 			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
 			res.next();
 			
+			if((res.getInt("Deaths") > 0) && (res.getInt("Kills") > 0)){
+				
 			kd = (res.getInt("Kills") / res.getInt("Deaths"));
+			
+			}else if((res.getInt("Kills") == 0) && (res.getInt("Deaths") == 0)){
+				
+				kd = 1;
+				
+			}else{
+				kd = res.getInt("Kills");
+			}
 		}catch(SQLException e){
 			
 			e.printStackTrace();
