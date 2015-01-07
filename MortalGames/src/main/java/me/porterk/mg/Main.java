@@ -307,6 +307,18 @@ public class Main extends JavaPlugin{
 				
 				p.sendMessage(tag + ChatColor.GOLD + "Your balance is " + ChatColor.RED + "" + api.getCash(p));
 			}
+			
+			if(args[0].equals("stats")){
+				
+				p.sendMessage(ChatColor.GOLD + "~ Stats for " + p.getName() + " ~");
+				p.sendMessage("");
+				p.sendMessage(ChatColor.GREEN + "Kills: " + ChatColor.RED + api.getKills(p));
+				p.sendMessage(ChatColor.GREEN + "Deaths: " + ChatColor.RED + api.getDeaths(p));
+				p.sendMessage(ChatColor.GREEN + "KDR: " + ChatColor.RED + api.getKDR(p));
+				p.sendMessage(ChatColor.GREEN + "Matches Played: " + ChatColor.RED + api.gamesPlayed(p));
+				p.sendMessage(ChatColor.GREEN + "Rank: " + api.rank(p));
+				
+			}
 
 		}
 

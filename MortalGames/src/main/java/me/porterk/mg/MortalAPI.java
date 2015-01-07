@@ -739,6 +739,50 @@ public class MortalAPI {
 		return df.format(kd);
 	}
 	
+	public int gamesPlayed(Player p){
+		
+		int games = 0;
+		
+		try{
+			
+			uuid = p.getUniqueId().toString();
+			
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
+			res.next();
+			
+			games = res.getInt("GamesPlayed");
+		}catch(SQLException e){
+			
+			e.printStackTrace();
+		}
+		
+		return games;
+	}
+	
+	public String rank(Player p){
+		
+		String rank = "";
+		
+		try{
+			
+			uuid = p.getUniqueId().toString();
+			
+			Main.getInstance().cs = Main.getInstance().c.createStatement();
+			
+			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + uuid + "';");
+			res.next();
+			
+			rank = res.getString("Rank");
+		}catch(SQLException e){
+			
+			e.printStackTrace();
+		}
+		
+		return rank;
+	}
+	
 	public void registerSQLTable(){
 		
 		try{
