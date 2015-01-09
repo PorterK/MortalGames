@@ -8,6 +8,7 @@ import java.util.HashMap;
 import java.util.logging.Level;
 
 import me.porterk.mg.mobs.CustomEntityType;
+import me.porterk.mg.mobs.MortalBat;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -17,8 +18,10 @@ import org.bukkit.Sound;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
+import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
@@ -282,14 +285,34 @@ public class Main extends JavaPlugin{
 
 					}
 					
-					if(args[1].equals("shop")){
+					if(args[1].equalsIgnoreCase("shop")){
 						
 						api.openShop(p);
 						
 					}
 					
-					else{
-						p.sendMessage(tag + ChatColor.GOLD + "Not enough arguments.");
+					if(args[1].equalsIgnoreCase("spawn")){
+						
+						if(args[2].equalsIgnoreCase("bat")){
+						
+							Location mobSpawn = new Location(p.getWorld(), api.random(p.getLocation().getBlockX() - 20, p.getLocation().getBlockX() + 13) + 1, 0, api.random(p.getLocation().getBlockZ() - 20, p.getLocation().getBlockZ() + 13) + 1);
+
+							mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
+
+							net.minecraft.server.v1_8_R1.World world = ((CraftWorld) p.getWorld()).getHandle();
+							
+							MortalBat b = new MortalBat(world);
+							
+							b.setTarget(p);
+							
+							b.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
+							
+							world.addEntity(b, SpawnReason.CUSTOM);
+							
+							api.bat(b.getBukkitEntity(), p);
+							
+						}
+						
 					}
 
 				}

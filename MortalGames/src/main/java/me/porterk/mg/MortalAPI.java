@@ -22,7 +22,13 @@ import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
 import me.porterk.mg.packetwrapper.WrapperPlayServerWorldEvent;
+import me.porterk.mg.pathcalc.AStar;
+import me.porterk.mg.pathcalc.AStar.InvalidPathException;
+import me.porterk.mg.pathcalc.PathingResult;
+import me.porterk.mg.pathcalc.Tile;
+import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityLiving;
+import net.minecraft.server.v1_8_R1.PathEntity;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -32,8 +38,10 @@ import org.bukkit.Sound;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
+import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
@@ -585,11 +593,14 @@ public class MortalAPI {
 										
 										MortalBat b = new MortalBat(world);
 										
+										b.setTarget(tar);
+										
 										b.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
 										
 										world.addEntity(b, SpawnReason.CUSTOM);
 										
-										((Creature) (LivingEntity) b).setTarget(tar);
+										bat(b.getBukkitEntity(), tar);
+
 										
 									}
 								}
@@ -941,5 +952,57 @@ public class MortalAPI {
 		p.openInventory(shop);
 		
 	}
+	
+	public void moveTo(Location l, ArrayList<Tile> tiles, Entity e){
+		
+		for(Tile t: tiles){
+			e.teleport(t.getLocation(l));
+		}
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void bat(final Entity e, final Player p){
+		
+		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable(){
+			
+			Location b = p.getLocation();
+			Location c = e.getLocation();
+			
+			int range = 25;
+			
+			public void run(){
+				
+				try {
+					AStar path = new AStar(c, b, range);
+					
+					ArrayList<Tile> route = path.iterate();
+					
+					PathingResult res = path.getPathingResult();
+					
+					switch(res){
+					
+					case SUCCESS :
+						moveTo(c, route, e);
+						break;
+					case NO_PATH :
+						moveTo(c, route, e);
+						break;
+					
+					}
+				} catch (InvalidPathException e) {
+					
+				}
+				
+				if(c.distance(b) <= 3){
+					c.getWorld().createExplosion(c, 3);
+				}
+				
+			}
+			
+		}, 0L, 20L);
+		
+	}
+	
 
 }
