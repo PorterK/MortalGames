@@ -987,7 +987,7 @@ public class MortalAPI {
 					
 					if(e.isValid()){
 					
-						a.getWorld().createExplosion(a, 3);
+						a.getWorld().createExplosion(a, 3, true);
 					
 					}
 					
