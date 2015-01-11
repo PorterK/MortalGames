@@ -74,6 +74,7 @@ public class MortalAPI {
 	int cash;
 	int teamNumber;
 	int duration;
+	int bat;
 	Statement s = null;
 	String uuid;
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
@@ -965,7 +966,7 @@ public class MortalAPI {
 		
 		
 		
-		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable(){
+		bat = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable(){
 			
 			
 			@Override
@@ -988,7 +989,9 @@ public class MortalAPI {
 					
 					e.remove();
 					
-					a.setY(-100);
+					cancelBat();
+					
+					a.zero();
 					
 				}
 			
@@ -996,6 +999,10 @@ public class MortalAPI {
 			
 		}, 0L, 1L);
 		
+	}
+	
+	public void cancelBat(){
+		Bukkit.getScheduler().cancelTask(bat);
 	}
 	
 
