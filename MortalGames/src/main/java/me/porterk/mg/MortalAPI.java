@@ -22,10 +22,6 @@ import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
 import me.porterk.mg.packetwrapper.WrapperPlayServerWorldEvent;
-import me.porterk.mg.pathcalc.AStar;
-import me.porterk.mg.pathcalc.AStar.InvalidPathException;
-import me.porterk.mg.pathcalc.PathingResult;
-import me.porterk.mg.pathcalc.Tile;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityLiving;
 import net.minecraft.server.v1_8_R1.PathEntity;
@@ -40,8 +36,12 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Bat;
+import org.bukkit.entity.Blaze;
 import org.bukkit.entity.Creature;
+import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
@@ -357,6 +357,7 @@ public class MortalAPI {
 
 		teamNumber = 0;
 		for (Player player : players) {
+			
 			teamSelect.put(player, teamNumber++);
 			if ((teamNumber == 1) ||
 				(teamNumber == 3) ||
@@ -599,7 +600,7 @@ public class MortalAPI {
 										
 										world.addEntity(b, SpawnReason.CUSTOM);
 										
-										bat(b.getBukkitEntity(), tar);
+										bat(b, tar);
 
 										
 									}
@@ -953,54 +954,47 @@ public class MortalAPI {
 		
 	}
 	
-	public void moveTo(Location l, ArrayList<Tile> tiles, Entity e){
-		
-		for(Tile t: tiles){
-			e.teleport(t.getLocation(l));
-		}
+	public void moveTo(Location l, Entity e){
+			EntityLiving el = ((CraftLivingEntity)((LivingEntity)e)).getHandle();
+            ((EntityInsentient) el).getNavigation().a(l.getX(), l.getY(), l.getZ(),.3f);
 		
 	}
 	
 	@SuppressWarnings("deprecation")
-	public void bat(final Entity e, final Player p){
+	public void bat(final MortalBat b, final Player p){
+		
+		
 		
 		Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable(){
 			
-			Location b = p.getLocation();
-			Location c = e.getLocation();
 			
-			int range = 25;
-			
+			@Override
 			public void run(){
 				
-				try {
-					AStar path = new AStar(c, b, range);
+				Bat e = (Bat) b.getBukkitEntity();
+				
+				Location a = e.getLocation();
+				Location b = p.getLocation();
+				
+				Vector vector = b.toVector().subtract(a.toVector());
+				
+				vector.multiply(.08);
+				
+				e.setVelocity(vector);
+				
+				if(a.distance(b) <= 3){
 					
-					ArrayList<Tile> route = path.iterate();
+					a.getWorld().createExplosion(a, 3);
 					
-					PathingResult res = path.getPathingResult();
+					e.remove();
 					
-					switch(res){
-					
-					case SUCCESS :
-						moveTo(c, route, e);
-						break;
-					case NO_PATH :
-						moveTo(c, route, e);
-						break;
-					
-					}
-				} catch (InvalidPathException e) {
+					a.setY(-100);
 					
 				}
-				
-				if(c.distance(b) <= 3){
-					c.getWorld().createExplosion(c, 3);
-				}
-				
+			
 			}
 			
-		}, 0L, 20L);
+		}, 0L, 1L);
 		
 	}
 	

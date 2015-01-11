@@ -11,12 +11,14 @@ public class MortalBat extends EntityBat{
 
 	public MortalBat(World arg0) {
 		super(arg0);
+
 	}
+	
 	
 	public void setTarget(Player p){
 		
 		pl = p;
-		
+
 	}
 	
 	public static Player target(){

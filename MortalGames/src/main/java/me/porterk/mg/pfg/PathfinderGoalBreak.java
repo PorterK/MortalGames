@@ -89,7 +89,6 @@ public class PathfinderGoalBreak extends PathfinderGoal{
 							e.printStackTrace();
 						}
 
-						a.world.broadcastEntityEffect(a, (byte) 16);
 					}
 
 				}

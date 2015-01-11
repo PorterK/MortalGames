@@ -309,7 +309,7 @@ public class Main extends JavaPlugin{
 							
 							world.addEntity(b, SpawnReason.CUSTOM);
 							
-							api.bat(b.getBukkitEntity(), p);
+							api.bat(b, p);
 							
 						}
 						
