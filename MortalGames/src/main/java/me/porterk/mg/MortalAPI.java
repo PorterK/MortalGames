@@ -985,13 +985,16 @@ public class MortalAPI {
 				
 				if(a.distance(b) <= 3){
 					
-					a.getWorld().createExplosion(a, 3);
+					if(e.isValid()){
+					
+						a.getWorld().createExplosion(a, 3);
+					
+					}
 					
 					e.remove();
 					
 					cancelBat();
-					
-					a.zero();
+
 					
 				}
 			
