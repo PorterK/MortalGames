@@ -989,12 +989,11 @@ public class MortalAPI {
 					
 						a.getWorld().createExplosion(a, 3);
 					
+					}else{
+						Bukkit.getScheduler().cancelTask(bat);
 					}
 					
 					e.remove();
-					
-					cancelBat();
-
 					
 				}
 			
