@@ -601,7 +601,7 @@ public class MortalAPI {
 										
 										world.addEntity(b, SpawnReason.CUSTOM);
 										
-										bat(b, tar);
+										Main.getInstance().bat(b, tar);
 
 										
 									}
@@ -955,53 +955,6 @@ public class MortalAPI {
 		
 	}
 	
-	public void moveTo(Location l, Entity e){
-			EntityLiving el = ((CraftLivingEntity)((LivingEntity)e)).getHandle();
-            ((EntityInsentient) el).getNavigation().a(l.getX(), l.getY(), l.getZ(),.3f);
-		
-	}
-	
-	@SuppressWarnings("deprecation")
-	public void bat(final MortalBat b, final Player p){
-		
-		
-		
-		bat = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable(){
-			
-			
-			@Override
-			public void run(){
-				
-				Bat e = (Bat) b.getBukkitEntity();
-				
-				Location a = e.getLocation();
-				Location b = p.getLocation();
-				
-				Vector vector = b.toVector().subtract(a.toVector());
-				
-				vector.multiply(.1);
-				
-				e.setVelocity(vector);
-				
-				if(a.distance(b) <= 3){
-					
-					if(e.isValid()){
-					
-						a.getWorld().createExplosion(a, 3);
-					
-					}else{
-						Bukkit.getScheduler().cancelTask(bat);
-					}
-					
-					e.remove();
-					
-				}
-			
-			}
-			
-		}, 0L, 1L);
-		
-	}
 	
 	public void cancelBat(){
 		Bukkit.getScheduler().cancelTask(bat);

@@ -19,6 +19,7 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
+import org.bukkit.entity.Bat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
@@ -27,6 +28,7 @@ import org.bukkit.scoreboard.DisplaySlot;
 import org.bukkit.scoreboard.Objective;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.scoreboard.Scoreboard;
+import org.bukkit.util.Vector;
 
 import com.comphenix.protocol.PacketType;
 import com.comphenix.protocol.ProtocolLibrary;
@@ -56,7 +58,7 @@ public class Main extends JavaPlugin{
 	public Score cash;
 	public Score mobs;
 	public Score website;
-	
+	public int bat;
 	private static Main plugin;
 	
 
@@ -309,7 +311,7 @@ public class Main extends JavaPlugin{
 							
 							world.addEntity(b, SpawnReason.CUSTOM);
 							
-							api.bat(b, p);
+							bat(b, p);
 							
 						}
 						
@@ -374,5 +376,47 @@ public static void createHelix(Player player) {
         loc.getWorld().playEffect(loc, Effect.SMOKE, 0);
         //player.playSound(player.getLocation(),Sound.ENDERMAN_TELEPORT,1, 1.3F);
     }
+}
+
+@SuppressWarnings("deprecation")
+public void bat(final MortalBat b, final Player p){
+	
+	
+	
+	bat = Bukkit.getServer().getScheduler().scheduleAsyncRepeatingTask(Main.getInstance(), new Runnable(){
+		
+		
+		@Override
+		public void run(){
+			
+			Bat e = (Bat) b.getBukkitEntity();
+			
+			Location a = e.getLocation();
+			Location b = p.getLocation();
+			
+			Vector vector = b.toVector().subtract(a.toVector());
+			
+			vector.multiply(.1);
+			
+			e.setVelocity(vector);
+			
+			if(a.distance(b) <= 3){
+				
+				if(e.isValid()){
+				
+					a.getWorld().createExplosion(a, 3);
+				
+				}else{
+					Bukkit.getScheduler().cancelTask(bat);
+				}
+				
+				e.remove();
+				
+			}
+		
+		}
+		
+	}, 0L, 1L);
+	
 }
 }
