@@ -74,7 +74,7 @@ public class MortalAPI {
 	int cash;
 	int teamNumber;
 	int duration;
-	int bat;
+	BukkitTask bat;
 	Statement s = null;
 	String uuid;
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
@@ -601,7 +601,7 @@ public class MortalAPI {
 										
 										world.addEntity(b, SpawnReason.CUSTOM);
 										
-										Main.getInstance().bat(b, tar);
+										bat(b, tar);
 
 										
 									}
@@ -955,9 +955,55 @@ public class MortalAPI {
 		
 	}
 	
+	public void moveTo(Location l, Entity e){
+			EntityLiving el = ((CraftLivingEntity)((LivingEntity)e)).getHandle();
+            ((EntityInsentient) el).getNavigation().a(l.getX(), l.getY(), l.getZ(),.3f);
+		
+	}
+	
+	public void bat(final MortalBat b, final Player p){
+		
+		
+		
+		bat = Bukkit.getServer().getScheduler().runTaskTimer(Main.getInstance(), new Runnable(){
+			
+			
+			@Override
+			public void run(){
+				
+				Bat e = (Bat) b.getBukkitEntity();
+				
+				Location a = e.getLocation();
+				Location b = p.getLocation();
+				
+				Vector vector = b.toVector().subtract(a.toVector());
+				
+				vector.multiply(.1);
+				
+				e.setVelocity(vector);
+				
+				if(a.distance(b) <= 3){
+					
+					if(e.isValid()){
+					
+						a.getWorld().createExplosion(a, 3);
+					
+					}else{
+						cancelBat();
+					}
+					
+					e.remove();
+					
+				}
+			
+			}
+			
+		}, 0L, 1L);
+		
+	}
 	
 	public void cancelBat(){
-		Bukkit.getScheduler().cancelTask(bat);
+		bat.cancel();
 	}
 	
 
