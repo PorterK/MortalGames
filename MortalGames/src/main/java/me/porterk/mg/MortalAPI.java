@@ -978,7 +978,7 @@ public class MortalAPI {
 				
 				Vector vector = b.toVector().subtract(a.toVector());
 				
-				vector.multiply(.08);
+				vector.multiply(.1);
 				
 				e.setVelocity(vector);
 				
