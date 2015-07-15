@@ -43,7 +43,7 @@ public class MortalZombie extends EntityZombie{
 	
 	public static void breakAnim(Entity e){
 		
-		e.getWorld().broadcastEntityEffect(e, (byte) 16);
+		/*e.getWorld().broadcastEntityEffect(e, (byte) 16);*/
 		
 	}
 

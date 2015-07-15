@@ -259,8 +259,10 @@ public class MortalListener implements Listener{
 				 
 				 e.getDrops().clear();
 				
+				 
+				 
 				 e.getDrops().add(new ItemStack(Material.BREAD, 1));
-				 e.getDrops().add(new ItemStack(Material.GOLD_NUGGET, api.random(0, 5))); //Will eventually be currency
+				 e.getDrops().add(new ItemStack((Material.GOLDEN_APPLE), api.random(0, 2), (short)1)); //Will eventually be currency
 				 
 			 }
 			 

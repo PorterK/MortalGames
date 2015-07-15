@@ -192,13 +192,13 @@ public class MortalAPI {
 	@SuppressWarnings("deprecation")
     public void playRecord(Player player, Vector loc, Material record){
 		
-		BlockPosition b = new BlockPosition(loc);
+		/*BlockPosition b = new BlockPosition(loc);
 		
         WrapperPlayServerWorldEvent event = new WrapperPlayServerWorldEvent();
         event.setData(record.getId());
         event.setLocation(b); 
         event.sendPacket(player);
-        event.setEffectId(1005);
+        event.setEffectId(1005);*/
     }
 	
 	@SuppressWarnings("deprecation")
@@ -603,7 +603,7 @@ public class MortalAPI {
 										
 										bat(b, tar);
 
-										
+										bat--;
 									}
 								}
 								
@@ -823,7 +823,7 @@ public class MortalAPI {
 	
 	public void registerPlayer(Player p){
 		
-		try {
+		/*try {
 			Main.getInstance().cs = Main.getInstance().c.createStatement();
 			
 			ResultSet res = Main.getInstance().cs.executeQuery("SELECT * FROM mg WHERE UUID = '" + p.getUniqueId().toString() + "';");
@@ -840,7 +840,7 @@ public class MortalAPI {
 			debugLog(e.toString());
 
 			e.printStackTrace();
-		}
+		}*/
 		
 	}
 
