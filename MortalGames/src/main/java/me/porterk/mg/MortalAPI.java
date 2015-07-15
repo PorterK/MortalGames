@@ -14,18 +14,14 @@ import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 import java.util.logging.Level;
 
 import me.porterk.mg.mobs.MortalBat;
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalZombie;
-import me.porterk.mg.packetwrapper.WrapperPlayServerWorldEvent;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityLiving;
-import net.minecraft.server.v1_8_R1.PathEntity;
-
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.GameMode;
@@ -37,11 +33,7 @@ import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Bat;
-import org.bukkit.entity.Blaze;
-import org.bukkit.entity.Creature;
-import org.bukkit.entity.Creeper;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.EntityType;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
 import org.bukkit.entity.Skeleton;
@@ -54,8 +46,6 @@ import org.bukkit.scheduler.BukkitTask;
 import org.bukkit.scoreboard.Score;
 import org.bukkit.util.Vector;
 import org.bukkit.Location;
-
-import com.comphenix.protocol.wrappers.BlockPosition;
 
 public class MortalAPI {
 
@@ -189,8 +179,7 @@ public class MortalAPI {
 	    return customConfig;
 	}
 	
-	@SuppressWarnings("deprecation")
-    public void playRecord(Player player, Vector loc, Material record){
+	public void playRecord(Player player, Vector loc, Material record){
 		
 		/*BlockPosition b = new BlockPosition(loc);
 		
@@ -353,6 +342,7 @@ public class MortalAPI {
 		for (Player player : Bukkit.getOnlinePlayers()) {
 			players.add(player);
 		}
+		
 
 		Collections.shuffle(players);
 
@@ -481,7 +471,7 @@ public class MortalAPI {
 		
 	}
 
-	@SuppressWarnings({ "deprecation", "static-access" })
+	@SuppressWarnings({ "deprecation" })
 	public void startWave(){
 				
 				setCanBuild(false);
@@ -849,9 +839,29 @@ public class MortalAPI {
 		return (int) (min + (Math.random() * (max - min) + 1));
 	}
 	
+	@SuppressWarnings("deprecation")
 	public void gameOver(){
 		
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			player.kickPlayer(ChatColor.GOLD + getWinner() + " has won!");
+		}
+		
+		
 		Bukkit.getServer().shutdown();
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	public String getWinner(){
+		
+		String display = null;
+		
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			if(!isSpectating(player)){
+				display = player.getDisplayName();
+			}
+		}
+		return display;
 		
 	}
 	
@@ -947,9 +957,9 @@ public class MortalAPI {
 		
 		Inventory shop = Main.getInstance().getServer().createInventory(null, 54, ChatColor.DARK_RED + "Mortal Shop");
 		
-		addItem(Material.GLASS, shop, "Glass", "Durability: 2", 500);
-		addItem(Material.DIRT, shop, "Dirt", "Durability: 3", 650);
-		addItem(Material.LOG, shop, "Log", "Durability: 5", 1000);
+		addItem(Material.TNT, shop, "Nuke", "Kills all mobs in a 30 block radius", 15);
+		addItem(Material.EMERALD, shop, "Double Emeralds", "Double emeralds for 60 seconds!", 20);
+		addItem(Material.EXP_BOTTLE, shop, "Double EXP!", "Double EXP for 120 seconds!", 20);
 		
 		p.openInventory(shop);
 		
@@ -1004,6 +1014,15 @@ public class MortalAPI {
 	
 	public void cancelBat(){
 		bat.cancel();
+	}
+	
+	public boolean isMod(Player p){
+		
+		if(p.hasPermission("mortal.mod")){
+			return true;
+		}else{
+		return false;
+		}
 	}
 	
 

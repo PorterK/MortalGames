@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
+import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -62,6 +63,7 @@ public class MortalListener implements Listener{
 					+ "/10" + ChatColor.GOLD +" players online!");
 			scoreboard(p);
 			
+			
 			if(api.isGameOn){
 				int number = 0; 
 				
@@ -93,6 +95,10 @@ public class MortalListener implements Listener{
 			p.sendMessage(ChatColor.AQUA + "Type" + ChatColor.DARK_RED + " /mg admin" + ChatColor.AQUA + " to get to admin chat!");
 		
 		}
+		
+		if(api.isMod(p)){
+			p.sendMessage(ChatColor.AQUA + "Type /mg moderate to join as a moderator, or continue playing as normal!");
+		}
 
 		if(playerCount == 10){
 			api.startGame();
@@ -105,10 +111,13 @@ public class MortalListener implements Listener{
 
 	}
 	
+	
 	@EventHandler
 	public void onPlayerLeave(PlayerQuitEvent e){	
 		String name = e.getPlayer().getName();
 		e.setQuitMessage(Main.getInstance().tag + name + " chickened out!");
+		
+		api.spectating.remove(name);
 	}
 
 	@SuppressWarnings("deprecation")
@@ -168,6 +177,14 @@ public class MortalListener implements Listener{
 					}
 					
 				}
+				
+				if(Main.getInstance().chat.get(sender.getName()).equals("mod")){
+					if(Main.getInstance().chat.get(online.getName()).equals("mod") || online.isOp()){
+						
+						online.sendMessage(ChatColor.DARK_GRAY + "[" + ChatColor.DARK_GREEN + "Mod" + ChatColor.DARK_GRAY + "]" + ChatColor.RESET + " " + sender.getDisplayName() + ChatColor.WHITE + ": " + e.getMessage() );
+						
+					}
+				}
 			}
 		}
 
@@ -222,6 +239,15 @@ public class MortalListener implements Listener{
 			e.setDeathMessage(deathMessage.get(1));
 		}
 		
+		List<Player> players = new ArrayList<Player>();
+		for (Player player : Bukkit.getOnlinePlayers()) {
+			players.add(player);
+		}
+		
+		if(players.size() - api.spectating.size() == 1){
+			api.gameOver();
+		}
+		
 	}
 	
 	 @EventHandler
@@ -261,16 +287,18 @@ public class MortalListener implements Listener{
 				
 				 
 				 
-				 e.getDrops().add(new ItemStack(Material.BREAD, 1));
-				 e.getDrops().add(new ItemStack((Material.GOLDEN_APPLE), api.random(0, 2), (short)1)); //Will eventually be currency
+				 e.getDrops().add(new  ItemStack(Material.BREAD, 1));
 				 
+				 if(api.waveNumber <= 2){
+				 e.getDrops().add(new ItemStack((Material.GOLDEN_APPLE), api.random(0, 2), (short)1)); //Will eventually be currency
+				 }
 			 }
 			 
 			 if(e.getEntity().getType().equals(EntityType.SKELETON)){
 				 
 				 e.getDrops().clear();
 				 
-				 e.getDrops().add(new ItemStack(Material.GOLD_NUGGET, api.random(3, 6)));
+				 e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, 1)));
 				 
 			 }
 			 
@@ -278,7 +306,7 @@ public class MortalListener implements Listener{
 				 
 				 e.getDrops().clear();
 				 
-				 e.getDrops().add(new ItemStack(Material.GOLD_NUGGET, api.random(4, 7)));
+				 e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, 1)));
 				 
 			 }
 			 
@@ -310,7 +338,7 @@ public class MortalListener implements Listener{
 				if(!(((Arrow) a).getShooter() instanceof Player)){
 				Location l = a.getLocation();
 				 
-				 l.getWorld().createExplosion(l, 3);
+				 l.getWorld().createExplosion(l, 2);
 				 
 				 a.remove();
 				}
@@ -328,17 +356,6 @@ public class MortalListener implements Listener{
 	     }  		
 	 }
 	 
-	 @EventHandler
-	 public void onPlayerQuit(PlayerQuitEvent e){
-		 
-		 Player p = e.getPlayer();
-		 
-		 if(api.team.containsKey(p)){
-			
-		 team.add(api.team.get(p));
-		 }
-		 
-		 e.setQuitMessage(null); 
-	 }
+
 
 }
