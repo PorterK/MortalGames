@@ -215,6 +215,12 @@ public class MortalListener implements Listener{
 		
 		e.setDeathMessage(Main.getInstance().tag + ChatColor.DARK_RED + "Player " + ChatColor.GOLD + a.getName() + ChatColor.DARK_RED + " has fallen to " + ChatColor.GOLD + a.getKiller().getName());
 		
+		Player b = a.getKiller();
+		
+		b.setHealth(0);
+		
+		b.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "Please don't team kill :)");
+		
 		}else{
 			List<String> deathMessage = new ArrayList<String>();
 			
@@ -260,13 +266,12 @@ public class MortalListener implements Listener{
 	            	
 	            	if(!api.allowPVP()){
 	            		e.setCancelled(true);
-	            		p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "PVP is not enabled yet.");
+	            		p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "Squad vs squad PVP is not enabled on this version.");
 	            	}else{
 	            		
 	            		if(api.getTeam(p) == api.getTeam(a)){
 	            			
-	            			p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "You may not attack your team mates. ");
-	            			e.setCancelled(true);
+	            			p.sendMessage(Main.getInstance().tag + ChatColor.DARK_RED + "Attacking your teammates is discouraged! ");
 	            			
 	            	
 	            		}

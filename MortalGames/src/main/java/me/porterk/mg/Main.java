@@ -155,8 +155,8 @@ public class Main extends JavaPlugin{
 	private void handlePing(WrappedServerPing ping) {
 	    ping.setPlayers(Arrays.asList(
 	        new WrappedGameProfile("id1", ChatColor.DARK_RED + "The Mortal Games"),
-	        new WrappedGameProfile("id2", ChatColor.YELLOW + "v. B.0.1"),
-	        new WrappedGameProfile("id3", ChatColor.GOLD + "GLServers, Inc")
+	        new WrappedGameProfile("id2", ChatColor.GOLD + "A project by"),
+	        new WrappedGameProfile("id3", ChatColor.GOLD + "PorterK and Joannou1")
 	        
 	        
 	    ));

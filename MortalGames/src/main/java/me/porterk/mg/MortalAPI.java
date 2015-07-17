@@ -939,7 +939,7 @@ public class MortalAPI {
 		List<String> c = new ArrayList<String>();
 		
 		c.add(lore);
-		c.add(ChatColor.AQUA + "" + price + " coins");
+		c.add(ChatColor.GREEN + "" + price + " emeralds");
 		
 		b.setDisplayName(name);
 		
