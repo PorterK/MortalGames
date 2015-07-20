@@ -26,7 +26,7 @@ public class Nuke extends Powerup{
 				if(e.isValid()){
 					
 					e.remove();
-					e.getWorld().playEffect(e.getLocation(), Effect.EXPLOSION, 3);
+					e.getWorld().playEffect(e.getLocation(), Effect.EXPLOSION_HUGE, 0);
 					mobs++;
 					
 				}
@@ -37,9 +37,7 @@ public class Nuke extends Powerup{
 		
 		p.sendMessage(main.tag + ChatColor.DARK_RED + "You killed " + ChatColor.GREEN + 
 				mobs + ChatColor.DARK_RED + " mobs!");
-		
-		api.broadcastMessage(ChatColor.GREEN + p.getDisplayName() + ChatColor.DARK_RED + " has used the "
-				+ ChatColor.GREEN + " Nuke " + ChatColor.DARK_RED + " perk!");
+
 	}
 	
 }
