@@ -59,7 +59,7 @@ public enum Powers {
 					} catch (IllegalArgumentException e) {
 						e.printStackTrace();
 					} catch (IllegalAccessException e) {
-						e.printStackTrace();/mg de
+						e.printStackTrace();
 					} catch (InvocationTargetException e) {
 						e.printStackTrace();
 					} catch (InstantiationException e) {
