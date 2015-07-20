@@ -9,6 +9,7 @@ import java.util.logging.Level;
 
 import me.porterk.mg.mobs.CustomEntityType;
 import me.porterk.mg.mobs.MortalBat;
+import me.porterk.mg.powerups.Powers;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -85,8 +86,8 @@ public class Main extends JavaPlugin{
 		time.setScore(0);
 		Score round = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.YELLOW + "Wave: "));
 		round.setScore(0);
-		Score website = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.RED + "" + ChatColor.ITALIC +  "mortal.gldesert.com"));
-		website.setScore(-9999);
+		Score website = obj.getScore(Bukkit.getOfflinePlayer(ChatColor.RED + "" + ChatColor.ITALIC +  "gld.bz"));
+		website.setScore(-1);
 		
 		CustomEntityType.registerEntities();
 		
@@ -138,8 +139,11 @@ public class Main extends JavaPlugin{
 			e.printStackTrace();
 		}
 		
+		try{
 		api.registerSQLTable();
-		
+		}catch(Exception e){
+			Bukkit.getServer().getLogger().log(Level.SEVERE, "Could not register SQL table");
+		}
 		 ProtocolLibrary.getProtocolManager().addPacketListener(
 			      new PacketAdapter(this, ListenerPriority.NORMAL,
 			      Arrays.asList(PacketType.Status.Server.OUT_SERVER_INFO), ListenerOptions.ASYNC) {
@@ -312,6 +316,12 @@ public class Main extends JavaPlugin{
 							api.bat(b, p);
 							
 						}
+						
+					}
+					
+					if(args[1].equalsIgnoreCase("powertest")){
+						
+						Powers.NUKE.start(p);
 						
 					}
 

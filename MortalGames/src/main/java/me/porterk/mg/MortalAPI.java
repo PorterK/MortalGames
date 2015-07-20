@@ -19,11 +19,14 @@ import java.util.logging.Level;
 import me.porterk.mg.mobs.MortalBat;
 import me.porterk.mg.mobs.MortalSkeleton;
 import me.porterk.mg.mobs.MortalSpider;
+import me.porterk.mg.mobs.MortalTrader;
 import me.porterk.mg.mobs.MortalZombie;
+import me.porterk.mg.powerups.Powers;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityLiving;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -257,6 +260,8 @@ public class MortalAPI {
 	}
 
 	public void startGame(){
+		
+		buildTrader(new Location(Bukkit.getWorld("world"), 0, 0, 0));
 		
 		playWaitMusic();
 		
@@ -528,9 +533,8 @@ public class MortalAPI {
 
 									z.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
 									world.addEntity(z, SpawnReason.CUSTOM);
-									
 									zombie--;
-
+									
 								}
 								
 								
@@ -590,6 +594,12 @@ public class MortalAPI {
 										b.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
 										
 										world.addEntity(b, SpawnReason.CUSTOM);
+										
+										while(!b.getBukkitEntity().isDead()){
+										
+										b.getBukkitEntity().getLocation().getWorld().playEffect(b.getBukkitEntity().getLocation(), Effect.MOBSPAWNER_FLAMES, 3);
+										
+										}
 										
 										bat(b, tar);
 
@@ -957,9 +967,11 @@ public class MortalAPI {
 		
 		Inventory shop = Main.getInstance().getServer().createInventory(null, 54, ChatColor.DARK_RED + "Mortal Shop");
 		
-		addItem(Material.TNT, shop, "Nuke", "Kills all mobs in a 30 block radius", 15);
-		addItem(Material.EMERALD, shop, "Double Emeralds", "Double emeralds for 60 seconds!", 20);
-		addItem(Material.EXP_BOTTLE, shop, "Double EXP!", "Double EXP for 120 seconds!", 20);
+		for(Powers power : Powers.values()){
+			
+			addItem(power.getShopItem(), shop, power.getName(), power.getDescription(), power.getPrice());
+			
+		}
 		
 		p.openInventory(shop);
 		
@@ -1025,5 +1037,33 @@ public class MortalAPI {
 		}
 	}
 	
+	public void buildTrader(Location l){
+		
+		l.setY(l.getWorld().getHighestBlockYAt(l));
+		
+		net.minecraft.server.v1_8_R1.World world = ((CraftWorld) l.getWorld()).getHandle();
+
+		MortalTrader t = new MortalTrader(world);
+
+		t.setPosition(l.getX(), l.getY(), l.getZ());
+		world.addEntity(t, SpawnReason.CUSTOM);
+		
+		t.getBukkitEntity().setCustomName("Trader");
+		t.getBukkitEntity().setCustomNameVisible(true);
+		
+		
+		
+	}
+	
+	@SuppressWarnings("deprecation")
+	public void broadcastMessage(String s){
+		
+		for(Player p : Main.getInstance().getServer().getOnlinePlayers()){
+			
+			p.sendMessage(Main.getInstance().tag + s);
+			
+		}
+		
+	}
 
 }

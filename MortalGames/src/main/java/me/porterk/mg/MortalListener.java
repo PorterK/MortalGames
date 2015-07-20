@@ -3,8 +3,11 @@ package me.porterk.mg;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Iterator;
 import java.util.List;
+
+import me.porterk.mg.powerups.DoubleEmeralds;
+import me.porterk.mg.powerups.DoubleExp;
+import me.porterk.mg.powerups.UltraDamage;
 
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
@@ -84,7 +87,7 @@ public class MortalListener implements Listener{
 			}
 		}else if(playerCount >= 10){
 			p.sendMessage(ChatColor.GOLD + "Welcome to " + ChatColor.DARK_RED + "The Mortal Games!");
-			p.sendMessage(ChatColor.BLUE + "Visit our website at" + ChatColor.RED + " mortal.gldesert.com");
+			p.sendMessage(ChatColor.BLUE + "Visit our website at" + ChatColor.RED + " http://www.gld.bz");
 			p.sendMessage(ChatColor.DARK_RED + "" +ChatColor.ITALIC + "Currently the game is full.");
 			api.setSpectating(p);
 			scoreboard(p);
@@ -284,34 +287,47 @@ public class MortalListener implements Listener{
 	 @EventHandler
 	 public void onMobDeath(EntityDeathEvent e){
 		 
+		 int maxEm = 1;
+		 
+		 if(DoubleEmeralds.isEnabled()){
+			 
+			 maxEm = 2;
+			 
+		 }
+		 
 		 if(e.getEntity().getKiller()  instanceof Player){
 			 
 			 if(e.getEntity().getType().equals(EntityType.ZOMBIE)){
 				 
 				 e.getDrops().clear();
-				
 				 
 				 
 				 e.getDrops().add(new  ItemStack(Material.BREAD, 1));
 				 
-				 if(api.waveNumber <= 2){
-				 e.getDrops().add(new ItemStack((Material.GOLDEN_APPLE), api.random(0, 2), (short)1)); //Will eventually be currency
-				 }
+				 if(api.waveNumber <= 2) e.getDrops().add(new ItemStack((Material.GOLDEN_APPLE), api.random(0, 2), (short)1));
+				 
+				 if(DoubleEmeralds.isEnabled()) e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, 1)));
+				 
+				 if(DoubleExp.isEnabled()) e.setDroppedExp(e.getDroppedExp() * 3);
 			 }
 			 
 			 if(e.getEntity().getType().equals(EntityType.SKELETON)){
 				 
 				 e.getDrops().clear();
 				 
-				 e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, 1)));
 				 
+				 e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, maxEm)));
+				 
+				 if(DoubleExp.isEnabled()) e.setDroppedExp(e.getDroppedExp() * 3);
 			 }
 			 
 			 if(e.getEntity().getType().equals(EntityType.SPIDER)){
 				 
 				 e.getDrops().clear();
 				 
-				 e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, 1)));
+				 e.getDrops().add(new ItemStack(Material.EMERALD, api.random(0, maxEm)));
+				 /*The perk is called double exp, but the exp is really trippled to notice the difference!*/
+				 if(DoubleExp.isEnabled()) e.setDroppedExp(e.getDroppedExp() * 3);
 				 
 			 }
 			 
@@ -360,6 +376,22 @@ public class MortalListener implements Listener{
 	 		Main.createHelixAsync(event.getPlayer());
 	     }  		
 	 }
+	 
+	 @SuppressWarnings("deprecation")
+		@EventHandler
+		public void onEntityDamageByEntity(EntityDamageByEntityEvent e){
+			
+			if(e.getDamager() instanceof Player){
+				
+				if(!(e.getEntity() instanceof Player)){
+					
+					if(UltraDamage.isEnabled()) e.setDamage(100);
+					
+				}
+				
+			}
+			
+		}
 	 
 
 

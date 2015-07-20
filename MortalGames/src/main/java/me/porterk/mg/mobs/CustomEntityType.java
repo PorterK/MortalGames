@@ -12,6 +12,7 @@ import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntitySkeleton;
 import net.minecraft.server.v1_8_R1.EntitySpider;
 import net.minecraft.server.v1_8_R1.EntityTypes;
+import net.minecraft.server.v1_8_R1.EntityVillager;
 import net.minecraft.server.v1_8_R1.EntityZombie;
 
 import org.bukkit.entity.EntityType;
@@ -21,7 +22,8 @@ public enum CustomEntityType {
 	ZOMBIE("Zombie", 54, EntityType.ZOMBIE, EntityZombie.class, MortalZombie.class),
 	SKELETON("Skeleton", 51, EntityType.SKELETON, EntitySkeleton.class, MortalSkeleton.class),
 	SPIDER("Spider", 52, EntityType.SPIDER, EntitySpider.class, MortalSpider.class),
-	BAT("Bat", 65, EntityType.BAT, EntityBat.class, MortalBat.class);
+	BAT("Bat", 65, EntityType.BAT, EntityBat.class, MortalBat.class),
+	TRADER("Trader", 49, EntityType.VILLAGER, EntityVillager.class, MortalTrader.class);
 
 	private String name;
 	private int id;
@@ -62,6 +64,7 @@ public enum CustomEntityType {
 	 * Register our entities.
 	 */
 	public static void registerEntities() {
+		
 		for (CustomEntityType entity : values())
 			a(entity.getCustomClass(), entity.getName(), entity.getID());
 
