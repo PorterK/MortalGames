@@ -951,7 +951,7 @@ public class MortalAPI {
 		c.add(lore);
 		c.add(ChatColor.GREEN + "" + price + " emeralds");
 		
-		b.setDisplayName(name);
+		b.setDisplayName(ChatColor.GOLD + name);
 		
 		b.setLore(c);
 		
