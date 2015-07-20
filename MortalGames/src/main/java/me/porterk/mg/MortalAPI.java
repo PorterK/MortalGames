@@ -61,6 +61,10 @@ public class MortalAPI {
 	public int preWave;
 	public int preWaveCount;
 	public int mobAmount;
+	public int voteTime;
+	public int voteTimer;
+	public int totalVotes;
+	public boolean voteEnabled;
 	protected boolean isGameOn;
 	protected boolean pvp;
 	protected boolean build;
@@ -1065,5 +1069,74 @@ public class MortalAPI {
 		}
 		
 	}
+	
+	 public void startVoteCycle(){
+		 
+		 voteEnabled = true;
+		 
+		 voteTime = 300;
+		 
+		 voteTimer = Main.getInstance().getServer().getScheduler().scheduleSyncRepeatingTask(Main.getInstance(), new Runnable(){
+				public void run(){
+					voteTime--;
+					
+					switch(voteTime){
+					
+					case 300:
+						broadcastMessage(ChatColor.DARK_RED + "Type " +
+					ChatColor.GREEN + "/mg vote " + ChatColor.DARK_RED + "to vote to start the game early!");
+					break;
+					
+					case 150:
+						broadcastMessage(ChatColor.DARK_RED + "Type " +
+								ChatColor.GREEN + "/mg vote " + ChatColor.DARK_RED + "to vote to start the game early!");
+					break;
+					case 60:
+						broadcastMessage(ChatColor.DARK_RED + "Type " +
+								ChatColor.GREEN + "/mg vote " + ChatColor.DARK_RED + "to vote to start the game early!");
+					break;
+					case 30:
+						broadcastMessage(ChatColor.DARK_RED + "Type " +
+								ChatColor.GREEN + "/mg vote " + ChatColor.DARK_RED + "to vote to start the game early!");
+					break;
+					case 0:
+						broadcastMessage(ChatColor.DARK_RED + "There were not enough votes to start the game! Restarting cycle!");
+						
+					voteTime = 300;
+					return;
+					}
+					
+				}
+		}, 0L, 20L);
+		
+		 
+	 }
+	 
+	 @SuppressWarnings("deprecation")
+	public void vote(Player p){
+		int a = 0;
+		
+		for (Player u : Bukkit.getOnlinePlayers()){
+			
+			if(!isSpectating(u)){
+				a ++;
+			}
+			
+		}
+		 
+		int votesNeeded = a / 2;
+		
+		totalVotes += 1;
+		
+		if(totalVotes >= votesNeeded){
+			
+			startGame();
+			
+		}else{
+			broadcastMessage(ChatColor.GREEN + "Thank you " + p.getDisplayName() + ChatColor.GREEN + " for your vote!" +
+		ChatColor.DARK_RED + (votesNeeded - totalVotes) + ChatColor.GREEN + " votes still needed!");
+		}
+	 }
+	 
 
 }

@@ -4,6 +4,7 @@ import java.lang.reflect.Constructor;
 
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
+import org.bukkit.Sound;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 
@@ -27,6 +28,7 @@ public class Nuke extends Powerup{
 					
 					e.remove();
 					e.getWorld().playEffect(e.getLocation(), Effect.EXPLOSION_HUGE, 0);
+					e.getWorld().playSound(e.getLocation(), Sound.EXPLODE, 10, 1);
 					mobs++;
 					
 				}

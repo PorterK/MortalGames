@@ -153,6 +153,8 @@ public class Main extends JavaPlugin{
 			            handlePing(event.getPacket().getServerPings().read(0));
 			        }
 			    }); 
+		 
+		 api.startVoteCycle();
 	}
 	
 	@SuppressWarnings("deprecation")
@@ -195,6 +197,12 @@ public class Main extends JavaPlugin{
 		Player p = (Player) s;
 
 		if(cmd.getName().equalsIgnoreCase("mg")){
+			
+			if(args[0].equalsIgnoreCase("vote")){
+				
+				s.sendMessage(this.tag + ChatColor.GREEN + "You have voted to start the game early! Thank you!");
+				api.vote(p);
+			}
 
 			if(args[0].equalsIgnoreCase("admin")){
 
