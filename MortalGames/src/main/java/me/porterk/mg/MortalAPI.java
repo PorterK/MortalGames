@@ -999,6 +999,9 @@ public class MortalAPI {
 		if(totalVotes >= votesNeeded){
 			
 			startGame();
+			Main.getInstance().getServer().getScheduler().cancelTask(voteTimer);
+
+			
 			
 		}else{
 			broadcastMessage(ChatColor.GREEN + "Thank you " + p.getDisplayName() + ChatColor.GREEN + " for your vote!" +
