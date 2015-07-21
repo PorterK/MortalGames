@@ -1,7 +1,5 @@
 package me.porterk.mg.powerups;
 
-import java.lang.reflect.Constructor;
-
 import org.bukkit.ChatColor;
 import org.bukkit.Effect;
 import org.bukkit.Sound;

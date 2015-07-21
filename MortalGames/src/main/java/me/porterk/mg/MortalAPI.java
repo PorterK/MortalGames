@@ -16,17 +16,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 
+import me.porterk.mg.gametype.GameType;
 import me.porterk.mg.mobs.MortalBat;
-import me.porterk.mg.mobs.MortalSkeleton;
-import me.porterk.mg.mobs.MortalSpider;
 import me.porterk.mg.mobs.MortalTrader;
-import me.porterk.mg.mobs.MortalZombie;
 import me.porterk.mg.powerups.Powers;
 import net.minecraft.server.v1_8_R1.EntityInsentient;
 import net.minecraft.server.v1_8_R1.EntityLiving;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
-import org.bukkit.Effect;
 import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.Sound;
@@ -34,14 +31,11 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.craftbukkit.v1_8_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_8_R1.entity.CraftLivingEntity;
-import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.entity.Player;
-import org.bukkit.entity.Skeleton;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
-import org.bukkit.inventory.EntityEquipment;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -76,7 +70,7 @@ public class MortalAPI {
 	String uuid;
 	HashMap<Player, Integer> teamSelect = new HashMap<Player, Integer>();
 	HashMap<Player, String> team = new HashMap<Player, String>();
-	ArrayList<String> spectating =  new ArrayList<String>();
+	public ArrayList<String> spectating =  new ArrayList<String>();
 	private FileConfiguration customConfig = null;
 
 	
@@ -480,7 +474,6 @@ public class MortalAPI {
 		
 	}
 
-	@SuppressWarnings({ "deprecation" })
 	public void startWave(){
 				
 				setCanBuild(false);
@@ -505,139 +498,14 @@ public class MortalAPI {
 
 						waveCount--;
 
-						if(waveCount == 0){
-							
+						switch(waveCount){
+						case 0:
 							preWave();
-							
-							
-							
+						return;
 						}
 
-						for(Player tar : Main.getInstance().getServer().getOnlinePlayers()){
-									
-							mobAmount = waveNumber * 2;
-								
-								tar.getWorld().setTime(15000);
-								
-							if(!spectating.contains(tar.getName())){
-
-								int zombie;
-
-								zombie = random(waveNumber, mobAmount);
-								mobAmount -= zombie;
-
-								while(zombie > 0){
-									Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
-
-									mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
-
-									net.minecraft.server.v1_8_R1.World world = ((CraftWorld) tar.getWorld()).getHandle();
-
-									MortalZombie z = new MortalZombie(world);
-
-									z.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
-									world.addEntity(z, SpawnReason.CUSTOM);
-									zombie--;
-									
-								}
-								
-								
-								if(waveNumber >= 3){
-									
-									int skeleton;
-									
-									skeleton = random((waveNumber / 2), waveNumber);
-									
-									while(skeleton > 0){
-										
-										
-										Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
-
-										mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
-
-										net.minecraft.server.v1_8_R1.World world = ((CraftWorld) tar.getWorld()).getHandle();
-										
-										MortalSkeleton s = new MortalSkeleton(world);
-										
-										s.setPosition(mobSpawn.getX(),mobSpawn.getY(), mobSpawn.getZ());
-										world.addEntity(s, SpawnReason.CUSTOM);
-										
-										ItemStack bow = new ItemStack(Material.BOW);
-											
-											bow.addEnchantment(Enchantment.ARROW_INFINITE, 1);
-											
-											Skeleton sk = (Skeleton) s.getBukkitEntity();
-											
-											EntityEquipment se = (EntityEquipment) sk.getEquipment();
-											
-											se.setItemInHand(bow);
-											
-											skeleton--;
-									}
-									
-								
-								}
-								
-								if(waveNumber >= 4){
-									int bat;
-									
-									bat = random(1, 3);
-									
-									while (bat > 0){
-										
-										Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
-
-										mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
-
-										net.minecraft.server.v1_8_R1.World world = ((CraftWorld) tar.getWorld()).getHandle();
-										
-										MortalBat b = new MortalBat(world);
-										
-										b.setTarget(tar);
-										
-										b.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
-										
-										world.addEntity(b, SpawnReason.CUSTOM);
-										
-										while(!b.getBukkitEntity().isDead()){
-										
-										b.getBukkitEntity().getLocation().getWorld().playEffect(b.getBukkitEntity().getLocation(), Effect.MOBSPAWNER_FLAMES, 3);
-										
-										}
-										
-										bat(b, tar);
-
-										bat--;
-									}
-								}
-								
-								if(waveNumber >= 5){
+						GameType.CLASSIC.doRound();
 						
-									int spider;
-									
-									spider = random(waveNumber / 5, waveNumber / 2);
-									
-									while(spider > 0){
-										
-										
-										Location mobSpawn = new Location(tar.getWorld(), random(tar.getLocation().getBlockX() - 20, tar.getLocation().getBlockX() + 13) + 1, 0, random(tar.getLocation().getBlockZ() - 20, tar.getLocation().getBlockZ() + 13) + 1);
-
-										mobSpawn.setY(mobSpawn.getWorld().getHighestBlockYAt(mobSpawn));
-
-										net.minecraft.server.v1_8_R1.World world = ((CraftWorld) tar.getWorld()).getHandle();
-										
-										MortalSpider s = new MortalSpider(world);
-										
-										s.setPosition(mobSpawn.getX(), mobSpawn.getY(), mobSpawn.getZ());
-										
-										world.addEntity(s, SpawnReason.CUSTOM);
-										
-										spider--;
-									}
-									
-								}
-							}
-						}
 
 					}
 
