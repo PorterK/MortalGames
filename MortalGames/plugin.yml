@@ -2,6 +2,16 @@ name: MortalGames
 main: me.porterk.mg.Main
 version: 1.0
 depend: [ProtocolLib]
-commands:
-      mg:
-         description: Mortal Games
+commands: 
+   mg:
+      description: Mortal Games
+      aliases: [mortal]
+   admin:
+      description: Mortal admin chat toggle
+      permission: mortal.admin
+      permission-message: §4You do not have permission for the admin chat!
+      aliases: [nv]
+   dev:
+      description: Mortal dev commands
+      permission: mortal.dev
+      permission-message: §4You aren't a dev! ...Or maybe you are? NO PERMS!
