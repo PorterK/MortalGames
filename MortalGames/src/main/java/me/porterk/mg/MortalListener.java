@@ -60,7 +60,7 @@ public class MortalListener implements Listener
         if (playerCount < 10)
         {
             p.sendMessage(ChatColor.GOLD + "Welcome, " + ChatColor.GREEN + p.getDisplayName() + ChatColor.GOLD + " to " + ChatColor.DARK_RED + "The Mortal Games");
-            p.sendMessage(ChatColor.BLUE + "Made by " + ChatColor.RED + " PorterK");
+            p.sendMessage(ChatColor.BLUE + "Made by " + ChatColor.RED + " PorterK & Joannou1"); //#SorryIWasTryingToStealAllTheCredit :P
             p.sendMessage(ChatColor.GOLD + "There are currently " + ChatColor.DARK_RED + playerCount + "/10" + ChatColor.GOLD + " players online!");
             scoreboard(p);
 

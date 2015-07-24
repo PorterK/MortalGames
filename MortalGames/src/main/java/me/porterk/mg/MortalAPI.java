@@ -942,7 +942,8 @@ public class MortalAPI
 
         t.getBukkitEntity().setCustomName("Trader");
         t.getBukkitEntity().setCustomNameVisible(true);
-
+        
+        Location init = t.getBukkitEntity().getLocation();
     }
 
     public void broadcastMessage(String s)
