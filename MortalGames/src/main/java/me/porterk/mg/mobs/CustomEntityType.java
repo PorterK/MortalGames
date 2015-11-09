@@ -54,6 +54,7 @@ public enum CustomEntityType
         return entityType;
     }
 
+
     public Class<? extends EntityInsentient> getNMSClass()
     {
         return nmsClass;
