@@ -30,7 +30,7 @@ public enum CustomEntityType
     private Class<? extends net.minecraft.server.v1_8_R3.EntityInsentient> nmsClass;
     private Class<? extends net.minecraft.server.v1_8_R3.EntityInsentient> customClass;
 
-    private CustomEntityType(String name, int id, EntityType entityType, Class<? extends net.minecraft.server.v1_8_R3.EntityInsentient> nmsClass, Class<? extends net.minecraft.server.v1_8_R3.EntityInsentient> customClass)
+    CustomEntityType(String name, int id, EntityType entityType, Class<? extends net.minecraft.server.v1_8_R3.EntityInsentient> nmsClass, Class<? extends net.minecraft.server.v1_8_R3.EntityInsentient> customClass)
     {
         this.name = name;
         this.id = id;
@@ -63,7 +63,6 @@ public enum CustomEntityType
     {
         return customClass;
     }
-
     /**
      * Register our entities.
      */
